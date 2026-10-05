@@ -1,0 +1,614 @@
+@import 'tailwindcss';
+
+@source '../views/**/*.blade.php';
+@source '../js/**/*.{ts,tsx}';
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+    --font-sans: 'Plus Jakarta Sans', ui-sans-serif, system-ui, -apple-system, sans-serif;
+    --font-display: 'Outfit', sans-serif;
+    --font-mono: 'JetBrains Mono', monospace;
+}
+
+:root {
+    --neu-bg: #ebf0f7;
+    --neu-surface: #ebf0f7;
+    --neu-card: #f0f4fa;
+    --neu-card-alt: #e6ecf5;
+    --neu-shadow-dark: #c2cde0;
+    --neu-shadow-light: #ffffff;
+    --neu-inset-dark: #cbd5e4;
+    --neu-inset-light: #ffffff;
+    --neu-border: rgba(255, 255, 255, 0.85);
+    --neu-border-inner: rgba(194, 205, 224, 0.4);
+    --neu-glow-blue: rgba(59, 130, 246, 0.45);
+    --neu-glow-purple: rgba(147, 51, 234, 0.4);
+    --neu-glow-emerald: rgba(16, 185, 129, 0.4);
+    --neu-glow-rose: rgba(244, 63, 94, 0.4);
+}
+
+html.dark {
+    --neu-bg: #0f121a;
+    --neu-surface: #151a24;
+    --neu-card: #1a202d;
+    --neu-card-alt: #131722;
+    --neu-shadow-dark: #080a0f;
+    --neu-shadow-light: #242c3d;
+    --neu-inset-dark: #090b10;
+    --neu-inset-light: #222938;
+    --neu-border: rgba(255, 255, 255, 0.08);
+    --neu-border-inner: rgba(0, 0, 0, 0.5);
+    --neu-glow-blue: rgba(59, 130, 246, 0.45);
+    --neu-glow-purple: rgba(168, 85, 247, 0.45);
+    --neu-glow-emerald: rgba(16, 185, 129, 0.45);
+    --neu-glow-rose: rgba(244, 63, 94, 0.45);
+}
+
+@layer base {
+    * {
+        border-color: var(--neu-border);
+    }
+    body {
+        font-family: var(--font-sans);
+        background-color: var(--neu-bg);
+        color: #1e293b;
+    }
+    html.dark body {
+        color: #f1f5f9;
+        background-color: var(--neu-bg);
+    }
+}
+
+/* ==========================================================================
+   NEUMORPHISM UI DESIGN SYSTEM (Soft UI + Tactile Physics)
+   ========================================================================== */
+
+/* Extruded Surfaces */
+.neu-flat {
+    background: var(--neu-card);
+    box-shadow: 6px 6px 14px var(--neu-shadow-dark), -6px -6px 14px var(--neu-shadow-light);
+    border: 1px solid var(--neu-border);
+}
+
+.neu-flat-sm {
+    background: var(--neu-card);
+    box-shadow: 3px 3px 8px var(--neu-shadow-dark), -3px -3px 8px var(--neu-shadow-light);
+    border: 1px solid var(--neu-border);
+}
+
+.neu-flat-lg {
+    background: var(--neu-card);
+    box-shadow: 12px 12px 28px var(--neu-shadow-dark), -12px -12px 28px var(--neu-shadow-light);
+    border: 1px solid var(--neu-border);
+}
+
+/* Sunken / Inset Recesses (Inputs, Wells, Tracks) */
+.neu-inset {
+    background: var(--neu-surface);
+    box-shadow: inset 3px 3px 6px var(--neu-inset-dark), inset -3px -3px 6px var(--neu-inset-light);
+    border: 1px solid transparent;
+}
+
+.neu-inset-sm {
+    background: var(--neu-surface);
+    box-shadow: inset 2px 2px 4px var(--neu-inset-dark), inset -2px -2px 4px var(--neu-inset-light);
+}
+
+.neu-inset-deep {
+    background: var(--neu-surface);
+    box-shadow: inset 5px 5px 10px var(--neu-inset-dark), inset -5px -5px 10px var(--neu-inset-light);
+}
+
+/* Neumorphic Interactive Buttons */
+.neu-btn {
+    background: var(--neu-card);
+    box-shadow: 4px 4px 10px var(--neu-shadow-dark), -4px -4px 10px var(--neu-shadow-light);
+    border: 1px solid var(--neu-border);
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.neu-btn:hover {
+    box-shadow: 6px 6px 14px var(--neu-shadow-dark), -6px -6px 14px var(--neu-shadow-light);
+    transform: translateY(-1px);
+}
+
+.neu-btn:active {
+    box-shadow: inset 3px 3px 6px var(--neu-inset-dark), inset -3px -3px 6px var(--neu-inset-light);
+    transform: translateY(0);
+}
+
+/* Primary Neumorphic Button (Dignified Slate-Navy, Minimalist) */
+.neu-btn-primary {
+    background: #1e293b;
+    color: #ffffff !important;
+    box-shadow: 3px 3px 8px var(--neu-shadow-dark), -3px -3px 8px var(--neu-shadow-light);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.neu-btn-primary:hover {
+    background: #334155;
+    box-shadow: 5px 5px 12px var(--neu-shadow-dark), -4px -4px 10px var(--neu-shadow-light);
+    transform: translateY(-1px);
+}
+
+.neu-btn-primary:active {
+    box-shadow: inset 2px 2px 5px rgba(0, 0, 0, 0.3);
+    transform: translateY(0);
+}
+
+html.dark .neu-btn-primary {
+    background: #334155;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+html.dark .neu-btn-primary:hover {
+    background: #475569;
+}
+
+/* Success Neumorphic Button */
+.neu-btn-success {
+    background: linear-gradient(135deg, #10b981 0%, #047857 100%);
+    color: #ffffff !important;
+    box-shadow: 4px 4px 12px var(--neu-shadow-dark), -3px -3px 8px var(--neu-shadow-light), 0 4px 16px var(--neu-glow-emerald);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+}
+
+/* Danger / Rose Button */
+.neu-btn-danger {
+    background: linear-gradient(135deg, #f43f5e 0%, #be123c 100%);
+    color: #ffffff !important;
+    box-shadow: 4px 4px 12px var(--neu-shadow-dark), -3px -3px 8px var(--neu-shadow-light), 0 4px 16px var(--neu-glow-rose);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+}
+
+/* Neumorphic Input Fields */
+.neu-input {
+    background: var(--neu-surface);
+    box-shadow: inset 3px 3px 6px var(--neu-inset-dark), inset -3px -3px 6px var(--neu-inset-light);
+    border: 1px solid transparent;
+    transition: all 0.2s ease;
+}
+
+.neu-input:focus {
+    box-shadow: inset 3px 3px 6px var(--neu-inset-dark), inset -3px -3px 6px var(--neu-inset-light), 0 0 0 2px rgba(59, 130, 246, 0.5);
+    outline: none;
+}
+
+/* Neumorphic Round Icon Pill */
+.neu-icon-pill {
+    background: var(--neu-card);
+    box-shadow: 4px 4px 8px var(--neu-shadow-dark), -4px -4px 8px var(--neu-shadow-light);
+    border: 1px solid var(--neu-border);
+    transition: all 0.2s ease;
+}
+
+.neu-icon-pill:hover {
+    box-shadow: 5px 5px 12px var(--neu-shadow-dark), -5px -5px 12px var(--neu-shadow-light);
+    transform: scale(1.03);
+}
+
+.neu-icon-pill:active {
+    box-shadow: inset 2px 2px 4px var(--neu-inset-dark), inset -2px -2px 4px var(--neu-inset-light);
+    transform: scale(0.98);
+}
+
+/* Neumorphic Badge */
+.neu-badge {
+    background: var(--neu-card);
+    box-shadow: 2px 2px 5px var(--neu-shadow-dark), -2px -2px 5px var(--neu-shadow-light);
+    border: 1px solid var(--neu-border);
+}
+
+/* Neumorphic Convex Highlight Card */
+.neu-card {
+    background: var(--neu-card);
+    box-shadow: 8px 8px 20px var(--neu-shadow-dark), -8px -8px 20px var(--neu-shadow-light);
+    border: 1px solid var(--neu-border);
+    border-radius: 1.5rem;
+}
+
+/* Segmented Control Track */
+.neu-track {
+    background: var(--neu-surface);
+    box-shadow: inset 3px 3px 6px var(--neu-inset-dark), inset -3px -3px 6px var(--neu-inset-light);
+    border: 1px solid var(--neu-border);
+}
+
+/* Active Segment Thumb */
+.neu-thumb-active {
+    background: var(--neu-card);
+    box-shadow: 3px 3px 7px var(--neu-shadow-dark), -3px -3px 7px var(--neu-shadow-light);
+    border: 1px solid var(--neu-border);
+}
+
+/* Neumorphic Alert Frame */
+.neu-alert {
+    background: var(--neu-card);
+    box-shadow: 8px 8px 22px var(--neu-shadow-dark), -8px -8px 22px var(--neu-shadow-light);
+    border: 1px solid var(--neu-border);
+}
+
+/* ==========================================================================
+   UIVERSE.IO INSPIRED NEUMORPHISM COMPONENTS
+   ========================================================================== */
+
+/* Convex Embossed Card with Soft Dual Lighting */
+.neu-convex {
+    background: linear-gradient(145deg, #f8fbff, #e1e8f3);
+    box-shadow: 7px 7px 16px var(--neu-shadow-dark), -7px -7px 16px var(--neu-shadow-light);
+    border: 1px solid var(--neu-border);
+    border-radius: 1.5rem;
+}
+html.dark .neu-convex {
+    background: linear-gradient(145deg, #1b212f, #131722);
+    box-shadow: 7px 7px 18px var(--neu-shadow-dark), -6px -6px 14px var(--neu-shadow-light);
+}
+
+/* Concave Sunken Card */
+.neu-concave {
+    background: linear-gradient(145deg, #e1e8f3, #f8fbff);
+    box-shadow: 6px 6px 14px var(--neu-shadow-dark), -6px -6px 14px var(--neu-shadow-light);
+    border: 1px solid var(--neu-border);
+    border-radius: 1.5rem;
+}
+html.dark .neu-concave {
+    background: linear-gradient(145deg, #131722, #1b212f);
+}
+
+/* Tactile Secondary Button (Extruded default -> Sunken on Active) */
+.neu-btn-tactile {
+    background: linear-gradient(145deg, #f8fbff, #e2ebf6);
+    box-shadow: 4px 4px 10px var(--neu-shadow-dark), -4px -4px 10px var(--neu-shadow-light);
+    border: 1px solid var(--neu-border);
+    transition: all 0.18s cubic-bezier(0.4, 0, 0.2, 1);
+    cursor: pointer;
+}
+.neu-btn-tactile:hover {
+    transform: translateY(-1.5px);
+    box-shadow: 6px 6px 14px var(--neu-shadow-dark), -6px -6px 14px var(--neu-shadow-light);
+}
+.neu-btn-tactile:active {
+    transform: translateY(0);
+    box-shadow: inset 3px 3px 6px var(--neu-inset-dark), inset -3px -3px 6px var(--neu-inset-light);
+}
+html.dark .neu-btn-tactile {
+    background: linear-gradient(145deg, #1d2432, #131722);
+}
+
+/* Tactile Primary Blue Action Button */
+.neu-btn-primary-tactile {
+    background: linear-gradient(145deg, #2563eb, #1d4ed8);
+    color: #ffffff !important;
+    box-shadow: 4px 4px 12px var(--neu-shadow-dark), -3px -3px 8px var(--neu-shadow-light), 0 4px 14px rgba(37, 99, 235, 0.35);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    transition: all 0.18s cubic-bezier(0.4, 0, 0.2, 1);
+    cursor: pointer;
+}
+.neu-btn-primary-tactile:hover {
+    background: linear-gradient(145deg, #3b82f6, #1e40af);
+    transform: translateY(-1.5px);
+    box-shadow: 6px 6px 16px var(--neu-shadow-dark), -4px -4px 12px var(--neu-shadow-light), 0 6px 18px rgba(37, 99, 235, 0.45);
+}
+.neu-btn-primary-tactile:active {
+    transform: translateY(0);
+    box-shadow: inset 2.5px 2.5px 6px rgba(0, 0, 0, 0.4);
+}
+
+/* Tactile Emerald Action Button */
+.neu-btn-emerald-tactile {
+    background: linear-gradient(145deg, #059669, #047857);
+    color: #ffffff !important;
+    box-shadow: 4px 4px 12px var(--neu-shadow-dark), -3px -3px 8px var(--neu-shadow-light), 0 4px 14px rgba(5, 150, 105, 0.35);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    transition: all 0.18s cubic-bezier(0.4, 0, 0.2, 1);
+    cursor: pointer;
+}
+.neu-btn-emerald-tactile:hover {
+    background: linear-gradient(145deg, #10b981, #065f46);
+    transform: translateY(-1.5px);
+    box-shadow: 6px 6px 16px var(--neu-shadow-dark), -4px -4px 12px var(--neu-shadow-light), 0 6px 18px rgba(5, 150, 105, 0.45);
+}
+.neu-btn-emerald-tactile:active {
+    transform: translateY(0);
+    box-shadow: inset 2.5px 2.5px 6px rgba(0, 0, 0, 0.4);
+}
+
+/* Tactile Danger Rose Button */
+.neu-btn-danger-tactile {
+    background: linear-gradient(145deg, #fff1f2, #ffe4e6);
+    color: #e11d48 !important;
+    border: 1px solid #fecdd3;
+    box-shadow: 4px 4px 10px var(--neu-shadow-dark), -4px -4px 10px var(--neu-shadow-light);
+    transition: all 0.18s cubic-bezier(0.4, 0, 0.2, 1);
+    cursor: pointer;
+}
+.neu-btn-danger-tactile:hover {
+    background: linear-gradient(145deg, #ffe4e6, #fecdd3);
+    color: #be123c !important;
+    transform: translateY(-1.5px);
+    box-shadow: 5px 5px 14px var(--neu-shadow-dark), -5px -5px 14px var(--neu-shadow-light);
+}
+.neu-btn-danger-tactile:active {
+    transform: translateY(0);
+    box-shadow: inset 2.5px 2.5px 5px rgba(225, 29, 72, 0.25);
+}
+html.dark .neu-btn-danger-tactile {
+    background: linear-gradient(145deg, #3f121d, #270912);
+    border: 1px solid #881337;
+    color: #fda4af !important;
+}
+
+/* Neumorphic Deep Inset Field Slot */
+.neu-field-slot {
+    background: var(--neu-surface);
+    box-shadow: inset 2.5px 2.5px 5px var(--neu-inset-dark), inset -2.5px -2.5px 5px var(--neu-inset-light);
+    border: 1px solid transparent;
+    border-radius: 0.875rem;
+    transition: all 0.2s ease;
+}
+.neu-field-slot:focus-within, .neu-field-slot:focus {
+    box-shadow: inset 2.5px 2.5px 5px var(--neu-inset-dark), inset -2.5px -2.5px 5px var(--neu-inset-light), 0 0 0 2px rgba(59, 130, 246, 0.5);
+    outline: none;
+}
+
+/* Neumorphic Segmented Tab Track */
+.neu-tab-track {
+    background: var(--neu-surface);
+    box-shadow: inset 3px 3px 6px var(--neu-inset-dark), inset -3px -3px 6px var(--neu-inset-light);
+    border: 1px solid var(--neu-border);
+    border-radius: 1.25rem;
+    padding: 0.35rem;
+}
+.neu-tab-pill {
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    border-radius: 0.95rem;
+}
+.neu-tab-pill-active {
+    background: var(--neu-card);
+    box-shadow: 3.5px 3.5px 8px var(--neu-shadow-dark), -3.5px -3.5px 8px var(--neu-shadow-light);
+    border: 1px solid var(--neu-border);
+    color: #2563eb !important;
+    font-weight: 800;
+}
+html.dark .neu-tab-pill-active {
+    color: #60a5fa !important;
+}
+
+/* Neumorphic Floating Pill Dock */
+.neu-floating-dock {
+    background: rgba(235, 240, 247, 0.94);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.85);
+    box-shadow: 8px 8px 24px var(--neu-shadow-dark), -8px -8px 24px var(--neu-shadow-light), 0 8px 20px -4px rgba(0, 0, 0, 0.08);
+    border-radius: 2rem;
+}
+html.dark .neu-floating-dock {
+    background: rgba(21, 26, 36, 0.94);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 8px 8px 24px #06080d, -6px -6px 18px #1f2736, 0 8px 20px -4px rgba(0, 0, 0, 0.6);
+}
+
+/* ==========================================================================
+   GLOBAL APP COMPONENT ENHANCEMENTS (All Pages Neumorphism & Dark Fixes)
+   ========================================================================== */
+@layer components {
+    /* Auto-elevate cards and white containers */
+    :not(.print-sheet) > .bg-white,
+    div.bg-white:not(.print-sheet),
+    section.bg-white,
+    aside.bg-white,
+    article.bg-white {
+        background-color: var(--neu-card) !important;
+        box-shadow: 6px 6px 16px var(--neu-shadow-dark), -6px -6px 16px var(--neu-shadow-light);
+        border-color: var(--neu-border) !important;
+    }
+
+    /* Dark Mode Deep Elements Fixes */
+    html.dark div.dark\:bg-slate-900:not(.print-sheet),
+    html.dark aside.dark\:bg-slate-900,
+    html.dark section.dark\:bg-slate-900,
+    html.dark .dark\:bg-slate-900:not(.print-sheet) {
+        background-color: var(--neu-card) !important;
+        box-shadow: 6px 6px 18px var(--neu-shadow-dark), -6px -6px 18px var(--neu-shadow-light);
+        border-color: var(--neu-border) !important;
+    }
+
+    /* In Dark Mode, replace all light inner boxes (bg-slate-50/100) with dark tactile surfaces */
+    html.dark .bg-slate-50:not(.print-sheet),
+    html.dark .bg-gray-50:not(.print-sheet) {
+        background-color: var(--neu-card-alt) !important;
+        border-color: var(--neu-border) !important;
+    }
+
+    html.dark .bg-slate-100:not(.print-sheet),
+    html.dark .bg-gray-100:not(.print-sheet) {
+        background-color: var(--neu-surface) !important;
+        border-color: var(--neu-border) !important;
+        color: #e2e8f0 !important;
+    }
+
+    html.dark .hover\:bg-slate-100:hover,
+    html.dark .hover\:bg-slate-200:hover {
+        background-color: #232a3a !important;
+        color: #ffffff !important;
+    }
+
+    /* Dark Mode Text Contrast Fixes */
+    html.dark .text-slate-900 {
+        color: #f8fafc !important;
+    }
+    html.dark .text-slate-800 {
+        color: #f1f5f9 !important;
+    }
+    html.dark .text-slate-700 {
+        color: #cbd5e1 !important;
+    }
+    html.dark .text-slate-600 {
+        color: #94a3b8 !important;
+    }
+    html.dark .text-slate-500 {
+        color: #94a3b8 !important;
+    }
+
+    /* Dark Mode Borders */
+    html.dark .border-slate-100,
+    html.dark .border-slate-200,
+    html.dark .border-slate-300 {
+        border-color: var(--neu-border) !important;
+    }
+
+    /* Dark Mode Badges */
+    html.dark .bg-blue-50 {
+        background-color: rgba(59, 130, 246, 0.16) !important;
+        color: #60a5fa !important;
+    }
+    html.dark .bg-emerald-50 {
+        background-color: rgba(16, 185, 129, 0.16) !important;
+        color: #34d399 !important;
+    }
+    html.dark .bg-purple-50 {
+        background-color: rgba(168, 85, 247, 0.16) !important;
+        color: #c084fc !important;
+    }
+    html.dark .bg-amber-50 {
+        background-color: rgba(245, 158, 11, 0.16) !important;
+        color: #fbbf24 !important;
+    }
+    html.dark .bg-rose-50,
+    html.dark .bg-red-50 {
+        background-color: rgba(244, 63, 94, 0.16) !important;
+        color: #fb7185 !important;
+    }
+
+    /* Tactile inputs and select elements */
+    input[type="text"]:not(.no-neu),
+    input[type="email"]:not(.no-neu),
+    input[type="password"]:not(.no-neu),
+    input[type="number"]:not(.no-neu),
+    input[type="search"]:not(.no-neu),
+    input[type="date"]:not(.no-neu),
+    textarea:not(.no-neu),
+    select:not(.no-neu) {
+        background-color: var(--neu-surface) !important;
+        box-shadow: inset 2px 2px 5px var(--neu-inset-dark), inset -2px -2px 5px var(--neu-inset-light) !important;
+        border-color: transparent !important;
+        transition: all 0.2s ease;
+    }
+
+    html.dark input[type="text"]:not(.no-neu),
+    html.dark input[type="email"]:not(.no-neu),
+    html.dark input[type="password"]:not(.no-neu),
+    html.dark input[type="number"]:not(.no-neu),
+    html.dark input[type="search"]:not(.no-neu),
+    html.dark input[type="date"]:not(.no-neu),
+    html.dark textarea:not(.no-neu),
+    html.dark select:not(.no-neu) {
+        color: #f1f5f9 !important;
+    }
+
+    input:focus, textarea:focus, select:focus {
+        outline: none !important;
+        box-shadow: inset 2px 2px 5px var(--neu-inset-dark), inset -2px -2px 5px var(--neu-inset-light), 0 0 0 2px rgba(59, 130, 246, 0.45) !important;
+    }
+
+    /* Tactile Buttons default lift */
+    button.bg-blue-600,
+    a.bg-blue-600 {
+        background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%) !important;
+        box-shadow: 4px 4px 12px var(--neu-shadow-dark), -3px -3px 8px var(--neu-shadow-light), 0 4px 16px var(--neu-glow-blue) !important;
+        border: 1px solid rgba(255, 255, 255, 0.2) !important;
+        transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+        color: #ffffff !important;
+    }
+
+    button.bg-blue-600:hover,
+    a.bg-blue-600:hover {
+        background: linear-gradient(135deg, #60a5fa 0%, #2563eb 100%) !important;
+        transform: translateY(-1px);
+        box-shadow: 5px 5px 15px var(--neu-shadow-dark), -4px -4px 10px var(--neu-shadow-light), 0 6px 20px var(--neu-glow-blue) !important;
+    }
+
+    button.bg-blue-600:active,
+    a.bg-blue-600:active {
+        transform: translateY(0);
+        box-shadow: inset 2px 2px 5px rgba(0, 0, 0, 0.4) !important;
+    }
+
+    /* Tactile Alerts across pages */
+    .bg-amber-50, .dark\:bg-amber-950,
+    .bg-rose-50, .dark\:bg-rose-950,
+    .bg-red-50, .dark\:bg-red-950,
+    .bg-emerald-50, .dark\:bg-emerald-950,
+    .bg-blue-50, .dark\:bg-blue-950 {
+        box-shadow: 4px 4px 12px var(--neu-shadow-dark), -4px -4px 12px var(--neu-shadow-light) !important;
+        border-radius: 1rem !important;
+    }
+
+    /* Modern Table Styling */
+    table {
+        border-collapse: separate;
+        border-spacing: 0;
+    }
+
+    thead th {
+        background-color: var(--neu-card-alt) !important;
+        color: #64748b;
+        font-weight: 700;
+        text-transform: uppercase;
+        font-size: 0.65rem;
+        letter-spacing: 0.05em;
+        border-bottom: 1px solid var(--neu-border) !important;
+    }
+
+    html.dark thead th {
+        color: #94a3b8;
+    }
+
+    tbody tr:hover {
+        background-color: var(--neu-surface) !important;
+    }
+}
+
+
+/* ==========================================================================
+   Print Stylesheet for Official A4 Documents
+   ========================================================================== */
+@media print {
+    body {
+        background: #ffffff !important;
+        color: #000000 !important;
+        font-size: 10pt !important;
+    }
+
+    .no-print,
+    nav,
+    aside,
+    header,
+    button,
+    .print-hide {
+        display: none !important;
+    }
+
+    main {
+        margin: 0 !important;
+        padding: 0 !important;
+        width: 100% !important;
+    }
+
+    .print-sheet {
+        box-shadow: none !important;
+        border: none !important;
+        width: 100% !important;
+        margin: 0 !important;
+        padding: 10mm 15mm !important;
+        page-break-after: always;
+    }
+
+    @page {
+        size: A4 portrait;
+        margin: 12mm 15mm;
+    }
+}
