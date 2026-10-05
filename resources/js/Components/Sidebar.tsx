@@ -82,47 +82,49 @@ export default function Sidebar({ isMinimized }: SidebarProps) {
     >
       {/* Brand Header with School Logo & Kolaborasi Sumut Berkah */}
       <div className={cn(
-        "flex h-20 items-center border-b border-[var(--neu-border)] transition-all duration-300",
-        isMinimized ? "justify-center px-2" : "px-4"
+        "flex flex-col justify-center border-b border-[var(--neu-border)] transition-all duration-300",
+        isMinimized ? "h-20 items-center px-2" : "py-3 px-4"
       )}>
-        <Link 
-          href="/dashboard" 
-          className={cn(
-            "flex items-center min-w-0 w-full",
-            isMinimized ? "justify-center" : "justify-between"
-          )} 
-          title="SIDATA Siswa SMKN 1 Beringin"
-        >
-          <div className="flex items-center gap-2.5 min-w-0">
+        {isMinimized ? (
+          <Link href="/dashboard" className="flex items-center justify-center" title="SIDATA Siswa SMKN 1 Beringin">
             <Logo size="md" withBezel={true} withGlow={true} />
-            {!isMinimized && (
-              <div className="flex flex-col min-w-0 animate-in fade-in duration-200">
-                <div className="flex items-center gap-1.5 font-extrabold tracking-tight text-slate-900 dark:text-white font-display">
-                  <span className="text-base font-black">SIDATA</span>
-                  <span className="neu-badge rounded-md px-1.5 py-0.5 text-[9px] font-black text-blue-600 dark:text-blue-400">
-                    SISWA
-                  </span>
-                </div>
-                <span className="text-[10px] font-semibold text-slate-400 dark:text-slate-500 truncate max-w-[100px] uppercase tracking-wider">
-                  {school?.name || 'SMKN 1 BERINGIN'}
+          </Link>
+        ) : (
+          <Link 
+            href="/dashboard" 
+            className="flex flex-col gap-2 min-w-0 w-full group select-none" 
+            title="SIDATA Siswa SMKN 1 Beringin"
+          >
+            {/* Row 1: Dual Logos side by side (School Logo + Kolaborasi Sumut Berkah) */}
+            <div className="flex items-center gap-2.5">
+              <Logo size="sm" withBezel={true} withGlow={true} />
+              <div className="h-5 w-[1.5px] bg-slate-300 dark:bg-slate-700 rounded-full" />
+              <div className="neu-flat-sm py-1 px-2.5 rounded-xl bg-white/90 dark:bg-slate-800/90 border border-slate-200/60 dark:border-slate-700/60 flex items-center shadow-xs">
+                <img
+                  src="/assets/kolaborasi-sumut-berkah.png"
+                  alt="Kolaborasi Sumut Berkah"
+                  className="h-4.5 w-auto object-contain dark:brightness-110 select-none pointer-events-none"
+                  style={{ maxHeight: '18px' }}
+                />
+              </div>
+            </div>
+
+            {/* Row 2: Brand Identity (Full width, zero overlap) */}
+            <div className="flex flex-col min-w-0 pl-0.5">
+              <div className="flex items-center gap-1.5 font-extrabold tracking-tight text-slate-900 dark:text-white font-display">
+                <span className="text-base font-black tracking-tight group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
+                  SIDATA
+                </span>
+                <span className="neu-badge rounded-md px-1.5 py-0.5 text-[9px] font-black text-blue-600 dark:text-blue-400">
+                  SISWA
                 </span>
               </div>
-            )}
-          </div>
-
-          {!isMinimized && (
-            <div 
-              className="neu-flat-sm p-1.5 px-2 rounded-xl flex items-center justify-center bg-white/80 dark:bg-slate-800/80 border border-slate-200/60 dark:border-slate-700/60 shrink-0 ml-1 hover:scale-105 transition-transform" 
-              title="Kolaborasi Sumut Berkah"
-            >
-              <img
-                src="/assets/kolaborasi-sumut-berkah.png"
-                alt="Kolaborasi Sumut Berkah"
-                className="h-6 w-auto object-contain dark:brightness-110 select-none pointer-events-none"
-              />
+              <span className="text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wider">
+                {school?.name || 'SMK NEGERI 1 BERINGIN'}
+              </span>
             </div>
-          )}
-        </Link>
+          </Link>
+        )}
       </div>
 
       {/* Role Badge Indicator */}
