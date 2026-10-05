@@ -17,9 +17,6 @@ Route::middleware('guest')->group(function () {
     Route::post('/login', [AuthController::class, 'login'])->name('login.post');
 });
 
-// Quick Demo Login & Role Switcher (accessible for guest and authenticated demo)
-Route::post('/quick-login', [AuthController::class, 'quickLogin'])->name('login.quick');
-
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
 // Authenticated Application Routes

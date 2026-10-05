@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link, usePage, router } from '@inertiajs/react';
+import { Link, usePage } from '@inertiajs/react';
 import { 
   LayoutDashboard, 
   Users, 
@@ -12,7 +12,6 @@ import {
   TrendingUp, 
   LogOut, 
   UserCircle2, 
-  CheckCircle2,
   Calendar
 } from 'lucide-react';
 import { SharedProps } from '@/Types';
@@ -25,11 +24,6 @@ export default function BottomNav() {
   const role = auth.user?.role || 'wali_kelas';
 
   const [moreMenuOpen, setMoreMenuOpen] = useState(false);
-
-  const handleSwitchRole = (newRole: 'admin' | 'operator' | 'wali_kelas') => {
-    router.post('/quick-login', { role: newRole });
-    setMoreMenuOpen(false);
-  };
 
   const navItems = [
     {
@@ -184,54 +178,12 @@ export default function BottomNav() {
               </span>
             </div>
 
-            {/* Quick Actions / Role Switcher */}
-            <div className="space-y-1.5 py-2">
-              <div className="text-[10px] font-extrabold uppercase tracking-wider text-slate-400 dark:text-slate-500 px-1">
-                Ganti Role Demo (1-Click)
-              </div>
-              <div className="grid grid-cols-3 gap-1.5">
-                <button
-                  type="button"
-                  onClick={() => handleSwitchRole('admin')}
-                  className={cn(
-                    "p-2 rounded-xl text-center text-xs font-bold transition flex flex-col items-center gap-0.5 cursor-pointer",
-                    role === 'admin'
-                      ? "neu-inset text-purple-600 dark:text-purple-400 font-black border border-purple-400/30"
-                      : "neu-btn text-slate-700 dark:text-slate-300"
-                  )}
-                >
-                  <span className="text-[10px] uppercase">Admin</span>
-                  {role === 'admin' && <CheckCircle2 className="h-3 w-3 text-purple-500" />}
-                </button>
-
-                <button
-                  type="button"
-                  onClick={() => handleSwitchRole('operator')}
-                  className={cn(
-                    "p-2 rounded-xl text-center text-xs font-bold transition flex flex-col items-center gap-0.5 cursor-pointer",
-                    role === 'operator'
-                      ? "neu-inset text-blue-600 dark:text-blue-400 font-black border border-blue-400/30"
-                      : "neu-btn text-slate-700 dark:text-slate-300"
-                  )}
-                >
-                  <span className="text-[10px] uppercase">Operator</span>
-                  {role === 'operator' && <CheckCircle2 className="h-3 w-3 text-blue-500" />}
-                </button>
-
-                <button
-                  type="button"
-                  onClick={() => handleSwitchRole('wali_kelas')}
-                  className={cn(
-                    "p-2 rounded-xl text-center text-xs font-bold transition flex flex-col items-center gap-0.5 cursor-pointer",
-                    role === 'wali_kelas'
-                      ? "neu-inset text-emerald-600 dark:text-emerald-400 font-black border border-emerald-400/30"
-                      : "neu-btn text-slate-700 dark:text-slate-300"
-                  )}
-                >
-                  <span className="text-[10px] uppercase">Wali Kelas</span>
-                  {role === 'wali_kelas' && <CheckCircle2 className="h-3 w-3 text-emerald-500" />}
-                </button>
-              </div>
+            {/* User Role Badge */}
+            <div className="flex items-center justify-between neu-flat-sm p-2.5 rounded-2xl text-xs mb-2">
+              <span className="text-slate-500 dark:text-slate-400 font-medium text-[11px]">Hak Akses / Peran:</span>
+              <span className="font-extrabold uppercase text-[10px] text-blue-600 dark:text-blue-400 neu-badge px-2.5 py-0.5 rounded-lg">
+                {role.replace('_', ' ')}
+              </span>
             </div>
 
             {/* Additional Nav Links for Admin/Operator */}

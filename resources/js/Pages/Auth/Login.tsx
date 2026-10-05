@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { useForm, Head, router } from '@inertiajs/react';
-import { Lock, Mail, ArrowRight, ShieldCheck, UserCheck, GraduationCap, Eye, EyeOff } from 'lucide-react';
+import { useForm, Head } from '@inertiajs/react';
+import { Lock, Mail, ArrowRight, Eye, EyeOff } from 'lucide-react';
 import Logo from '@/Components/Logo';
 import ThemeToggle from '@/Components/ThemeToggle';
 import NeumorphicAlert from '@/Components/NeumorphicAlert';
@@ -14,16 +14,10 @@ export default function Login() {
   });
 
   const [showPassword, setShowPassword] = useState(false);
-  const [activeDemoRole, setActiveDemoRole] = useState<'admin' | 'operator' | 'wali_kelas' | null>(null);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     post('/login');
-  };
-
-  const handleQuickLogin = (role: 'admin' | 'operator' | 'wali_kelas') => {
-    setActiveDemoRole(role);
-    router.post('/quick-login', { role });
   };
 
   const hasErrors = Object.keys(errors).length > 0;
@@ -148,70 +142,14 @@ export default function Login() {
             </button>
           </form>
 
-          {/* Quick Demo 1-Click Access (Segmented & Modern 21st.dev style) */}
-          <div className="mt-6 pt-5 border-t border-slate-200/60 dark:border-slate-800/80">
-            <div className="flex items-center justify-between mb-2.5 px-0.5">
-              <span className="text-[11px] font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500">
-                Akun Demo Cepat
-              </span>
-              <span className="text-[10px] text-blue-500 font-semibold">1-Klik</span>
-            </div>
-
-            <div className="grid grid-cols-3 gap-2">
-              <button
-                type="button"
-                disabled={processing}
-                onClick={() => handleQuickLogin('admin')}
-                className={cn(
-                  'neu-btn flex flex-col items-center justify-center p-2.5 rounded-2xl group cursor-pointer transition-all',
-                  activeDemoRole === 'admin' && 'neu-inset'
-                )}
-                title="Masuk sebagai Administrator"
-              >
-                <div className="p-1.5 rounded-xl neu-inset-sm text-purple-600 dark:text-purple-400 mb-1 group-hover:scale-110 transition-transform">
-                  <ShieldCheck className="h-4 w-4" />
-                </div>
-                <span className="text-[11px] font-bold text-slate-800 dark:text-slate-200">
-                  Admin
-                </span>
-              </button>
-
-              <button
-                type="button"
-                disabled={processing}
-                onClick={() => handleQuickLogin('operator')}
-                className={cn(
-                  'neu-btn flex flex-col items-center justify-center p-2.5 rounded-2xl group cursor-pointer transition-all',
-                  activeDemoRole === 'operator' && 'neu-inset'
-                )}
-                title="Masuk sebagai Operator"
-              >
-                <div className="p-1.5 rounded-xl neu-inset-sm text-blue-600 dark:text-blue-400 mb-1 group-hover:scale-110 transition-transform">
-                  <UserCheck className="h-4 w-4" />
-                </div>
-                <span className="text-[11px] font-bold text-slate-800 dark:text-slate-200">
-                  Operator
-                </span>
-              </button>
-
-              <button
-                type="button"
-                disabled={processing}
-                onClick={() => handleQuickLogin('wali_kelas')}
-                className={cn(
-                  'neu-btn flex flex-col items-center justify-center p-2.5 rounded-2xl group cursor-pointer transition-all',
-                  activeDemoRole === 'wali_kelas' && 'neu-inset'
-                )}
-                title="Masuk sebagai Wali Kelas (X PPLG 2)"
-              >
-                <div className="p-1.5 rounded-xl neu-inset-sm text-emerald-600 dark:text-emerald-400 mb-1 group-hover:scale-110 transition-transform">
-                  <GraduationCap className="h-4 w-4" />
-                </div>
-                <span className="text-[11px] font-bold text-slate-800 dark:text-slate-200">
-                  Wali Kelas
-                </span>
-              </button>
-            </div>
+          {/* Production Footer Note */}
+          <div className="mt-6 pt-4 border-t border-[var(--neu-border)] text-center">
+            <p className="text-[11px] text-slate-400 dark:text-slate-500 font-medium">
+              Sistem Informasi Buku Induk & Raport Resmi
+            </p>
+            <p className="text-[10px] text-slate-400/80 dark:text-slate-600 mt-0.5">
+              &copy; {new Date().getFullYear()} SMK Negeri 1 Beringin. All rights reserved.
+            </p>
           </div>
 
         </div>

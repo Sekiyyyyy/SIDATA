@@ -42,28 +42,6 @@ class AuthController extends Controller
         ]);
     }
 
-    public function quickLogin(Request $request)
-    {
-        $role = $request->input('role', 'admin');
-        $emailMap = [
-            'admin' => 'admin@sidata.test',
-            'operator' => 'operator@sidata.test',
-            'wali_kelas' => 'walikelas@sidata.test',
-        ];
-
-        $email = $emailMap[$role] ?? 'admin@sidata.test';
-        $user = User::where('email', $email)->first();
-
-        if ($user) {
-            Auth::login($user);
-            $request->session()->regenerate();
-            AuditLog::record('Quick Login (' . ucfirst(str_replace('_', ' ', $role)) . ')', $user);
-            return redirect('/dashboard')->with('success', 'Masuk sebagai ' . $user->name . ' (' . strtoupper($user->role) . ')');
-        }
-
-        return back()->with('error', 'Akun tidak ditemukan.');
-    }
-
     public function logout(Request $request)
     {
         $user = Auth::user();

@@ -4,8 +4,6 @@ import {
   Search, 
   Calendar, 
   LogOut, 
-  CheckCircle2, 
-  ChevronDown, 
   UserCircle2,
   PanelLeftClose,
   PanelLeftOpen
@@ -23,18 +21,12 @@ interface NavbarProps {
 export default function Navbar({ isMinimized = false, onToggleMinimize }: NavbarProps) {
   const { auth, activeAcademicYear, activeSemester, school } = usePage<SharedProps>().props;
   const [search, setSearch] = useState('');
-  const [roleDropdownOpen, setRoleDropdownOpen] = useState(false);
 
   const handleGlobalSearch = (e: React.FormEvent) => {
     e.preventDefault();
     if (search.trim()) {
       router.get('/students', { search: search.trim() });
     }
-  };
-
-  const handleSwitchRole = (role: 'admin' | 'operator' | 'wali_kelas') => {
-    router.post('/quick-login', { role });
-    setRoleDropdownOpen(false);
   };
 
   return (
@@ -102,75 +94,13 @@ export default function Navbar({ isMinimized = false, onToggleMinimize }: Navbar
           <ThemeToggle variant="compact" />
         </div>
 
-        {/* Quick Role Switcher Button & Dropdown */}
-        <div className="relative">
-          <button
-            onClick={() => setRoleDropdownOpen(!roleDropdownOpen)}
-            className="neu-btn flex items-center gap-1.5 sm:gap-2 rounded-xl px-2.5 sm:px-3 py-1.5 sm:py-2 text-xs font-bold text-slate-700 dark:text-slate-200 cursor-pointer"
-            aria-label="Ganti Role Akun"
-          >
-            <UserCircle2 className="h-4 w-4 text-blue-500 shrink-0" />
-            <span className="hidden md:inline">Role:</span>
-            <span className="uppercase text-blue-600 dark:text-blue-400 font-extrabold text-[11px] sm:text-xs">
-              {auth.user?.role?.replace('_', ' ')}
-            </span>
-            <ChevronDown className="h-3.5 w-3.5 text-slate-400 shrink-0" />
-          </button>
-
-          {roleDropdownOpen && (
-            <div className="neu-card absolute right-0 mt-2 w-64 rounded-2xl p-2 z-50 animate-in fade-in zoom-in-95 duration-150 shadow-2xl">
-              <div className="px-3 py-1.5 text-[11px] font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500">
-                Ganti Akun Demo (1-Click)
-              </div>
-              <button
-                onClick={() => handleSwitchRole('admin')}
-                className={cn(
-                  'w-full flex items-center justify-between rounded-xl px-3 py-2.5 text-xs font-semibold text-left transition-all mb-1 cursor-pointer',
-                  auth.user?.role === 'admin'
-                    ? 'neu-inset text-purple-600 dark:text-purple-400 font-bold'
-                    : 'neu-btn text-slate-700 dark:text-slate-300'
-                )}
-              >
-                <div>
-                  <p className="font-bold">1. Administrator</p>
-                  <p className="text-[10px] text-slate-400">admin@sidata.test</p>
-                </div>
-                {auth.user?.role === 'admin' && <CheckCircle2 className="h-4 w-4 text-purple-500" />}
-              </button>
-
-              <button
-                onClick={() => handleSwitchRole('operator')}
-                className={cn(
-                  'w-full flex items-center justify-between rounded-xl px-3 py-2.5 text-xs font-semibold text-left transition-all mb-1 cursor-pointer',
-                  auth.user?.role === 'operator'
-                    ? 'neu-inset text-blue-600 dark:text-blue-400 font-bold'
-                    : 'neu-btn text-slate-700 dark:text-slate-300'
-                )}
-              >
-                <div>
-                  <p className="font-bold">2. Operator</p>
-                  <p className="text-[10px] text-slate-400">operator@sidata.test</p>
-                </div>
-                {auth.user?.role === 'operator' && <CheckCircle2 className="h-4 w-4 text-blue-500" />}
-              </button>
-
-              <button
-                onClick={() => handleSwitchRole('wali_kelas')}
-                className={cn(
-                  'w-full flex items-center justify-between rounded-xl px-3 py-2.5 text-xs font-semibold text-left transition-all cursor-pointer',
-                  auth.user?.role === 'wali_kelas'
-                    ? 'neu-inset text-emerald-600 dark:text-emerald-400 font-bold'
-                    : 'neu-btn text-slate-700 dark:text-slate-300'
-                )}
-              >
-                <div>
-                  <p className="font-bold">3. Wali Kelas (X PPLG 2)</p>
-                  <p className="text-[10px] text-slate-400">walikelas@sidata.test</p>
-                </div>
-                {auth.user?.role === 'wali_kelas' && <CheckCircle2 className="h-4 w-4 text-emerald-500" />}
-              </button>
-            </div>
-          )}
+        {/* Current User Role Badge */}
+        <div className="neu-flat-sm flex items-center gap-1.5 sm:gap-2 rounded-xl px-2.5 sm:px-3 py-1.5 sm:py-2 text-xs font-bold text-slate-700 dark:text-slate-200">
+          <UserCircle2 className="h-4 w-4 text-blue-500 shrink-0" />
+          <span className="hidden md:inline text-slate-500 dark:text-slate-400 font-medium">Role:</span>
+          <span className="uppercase text-blue-600 dark:text-blue-400 font-extrabold text-[11px] sm:text-xs">
+            {auth.user?.role?.replace('_', ' ')}
+          </span>
         </div>
 
         {/* Logout Button (Desktop) */}
