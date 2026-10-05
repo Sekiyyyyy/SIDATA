@@ -47,8 +47,16 @@ export default function Login() {
 
           {/* School Brand & Logo (Everything inside the Card!) */}
           <div className="flex flex-col items-center text-center mb-6">
-            <div className="relative group">
-              <Logo size="lg" withBezel={true} withGlow={true} className="mb-3 hover:scale-105 transition-transform" />
+            <div className="flex items-center justify-center gap-3 mb-3">
+              <Logo size="lg" withBezel={true} withGlow={true} className="hover:scale-105 transition-transform" />
+              <div className="h-10 w-px bg-slate-300 dark:bg-slate-700/80" />
+              <div className="neu-flat-sm rounded-2xl p-2.5 h-16 flex items-center justify-center bg-white/80 dark:bg-slate-800/80 shadow-xs hover:scale-105 transition-transform" title="Kolaborasi Sumut Berkah">
+                <img
+                  src="/assets/kolaborasi-sumut-berkah.png"
+                  alt="Kolaborasi Sumut Berkah"
+                  className="h-8.5 w-auto object-contain select-none pointer-events-none dark:brightness-110"
+                />
+              </div>
             </div>
 
             <div className="flex items-center justify-center gap-2">

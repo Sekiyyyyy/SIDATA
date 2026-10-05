@@ -80,31 +80,46 @@ export default function Sidebar({ isMinimized }: SidebarProps) {
         isMinimized ? "w-20" : "w-72"
       )}
     >
-      {/* Brand Header with School Logo */}
+      {/* Brand Header with School Logo & Kolaborasi Sumut Berkah */}
       <div className={cn(
         "flex h-20 items-center border-b border-[var(--neu-border)] transition-all duration-300",
-        isMinimized ? "justify-center px-2" : "px-5"
+        isMinimized ? "justify-center px-2" : "px-4"
       )}>
         <Link 
           href="/dashboard" 
           className={cn(
-            "flex items-center min-w-0",
-            isMinimized ? "justify-center" : "gap-3"
+            "flex items-center min-w-0 w-full",
+            isMinimized ? "justify-center" : "justify-between"
           )} 
           title="SIDATA Siswa SMKN 1 Beringin"
         >
-          <Logo size="md" withBezel={true} withGlow={true} />
-          {!isMinimized && (
-            <div className="flex flex-col min-w-0 animate-in fade-in duration-200">
-              <div className="flex items-center gap-1.5 font-extrabold tracking-tight text-slate-900 dark:text-white font-display">
-                <span className="text-lg">SIDATA</span>
-                <span className="neu-badge rounded-md px-1.5 py-0.5 text-[10px] font-black text-blue-600 dark:text-blue-400">
-                  SISWA
+          <div className="flex items-center gap-2.5 min-w-0">
+            <Logo size="md" withBezel={true} withGlow={true} />
+            {!isMinimized && (
+              <div className="flex flex-col min-w-0 animate-in fade-in duration-200">
+                <div className="flex items-center gap-1.5 font-extrabold tracking-tight text-slate-900 dark:text-white font-display">
+                  <span className="text-base font-black">SIDATA</span>
+                  <span className="neu-badge rounded-md px-1.5 py-0.5 text-[9px] font-black text-blue-600 dark:text-blue-400">
+                    SISWA
+                  </span>
+                </div>
+                <span className="text-[10px] font-semibold text-slate-400 dark:text-slate-500 truncate max-w-[100px] uppercase tracking-wider">
+                  {school?.name || 'SMKN 1 BERINGIN'}
                 </span>
               </div>
-              <span className="text-[11px] font-semibold text-slate-400 dark:text-slate-500 truncate max-w-[150px] uppercase tracking-wider">
-                {school?.name || 'SMKN 1 BERINGIN'}
-              </span>
+            )}
+          </div>
+
+          {!isMinimized && (
+            <div 
+              className="neu-flat-sm p-1.5 px-2 rounded-xl flex items-center justify-center bg-white/80 dark:bg-slate-800/80 border border-slate-200/60 dark:border-slate-700/60 shrink-0 ml-1 hover:scale-105 transition-transform" 
+              title="Kolaborasi Sumut Berkah"
+            >
+              <img
+                src="/assets/kolaborasi-sumut-berkah.png"
+                alt="Kolaborasi Sumut Berkah"
+                className="h-6 w-auto object-contain dark:brightness-110 select-none pointer-events-none"
+              />
             </div>
           )}
         </Link>

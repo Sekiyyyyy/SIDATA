@@ -20,7 +20,8 @@ import {
   UploadCloud,
   X,
   AlertCircle,
-  CheckCircle2
+  CheckCircle2,
+  RotateCcw
 } from 'lucide-react';
 import { Student, SchoolClass, PaginatedResponse, SharedProps } from '@/Types';
 
@@ -183,10 +184,10 @@ export default function StudentIndex({ students, classes, filters }: StudentInde
       </div>
 
       {/* Filter and Search Bar (Fully Responsive Neumorphic Card) */}
-      <div className="mb-6 p-4 sm:p-5 rounded-3xl neu-convex">
-        <form onSubmit={handleFilter} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3">
+      <div className="mb-6 p-3.5 sm:p-5 rounded-3xl neu-convex">
+        <form onSubmit={handleFilter} className="flex flex-col lg:flex-row items-stretch lg:items-center gap-3">
           {/* Search Input */}
-          <div className="sm:col-span-2 relative">
+          <div className="relative flex-1 min-w-0">
             <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400" />
             <input
               type="text"
@@ -197,71 +198,78 @@ export default function StudentIndex({ students, classes, filters }: StudentInde
             />
           </div>
 
-          {/* Filter Class */}
-          <div>
-            {auth.user?.role === 'wali_kelas' && classes.length > 0 ? (
-              <div className="neu-field-slot w-full px-3.5 py-2.5 text-xs font-bold text-blue-900 dark:text-blue-200 flex items-center justify-between">
-                <span className="truncate">{classes[0].name}</span>
-                <span className="text-[10px] neu-badge px-2 py-0.5 rounded-full shrink-0 font-extrabold text-blue-700 dark:text-blue-300">Kelas Anda</span>
-              </div>
-            ) : (
+          {/* Filters & Reset Action */}
+          <div className="grid grid-cols-2 sm:grid-cols-4 lg:flex lg:items-center gap-2.5 sm:gap-3 shrink-0">
+            {/* Filter Class */}
+            <div className="col-span-1 lg:w-44 min-w-0">
+              {auth.user?.role === 'wali_kelas' && classes.length > 0 ? (
+                <div className="neu-field-slot w-full px-3 py-2.5 text-xs font-bold text-blue-900 dark:text-blue-200 flex items-center justify-between gap-1 min-w-0">
+                  <span className="truncate">{classes[0].name}</span>
+                  <span className="text-[10px] neu-badge px-1.5 py-0.5 rounded-full shrink-0 font-extrabold text-blue-700 dark:text-blue-300">Kelas Anda</span>
+                </div>
+              ) : (
+                <select
+                  value={selectedClass}
+                  onChange={(e) => {
+                    setSelectedClass(e.target.value);
+                    router.get('/students', { ...filters, class_id: e.target.value || undefined }, { preserveState: true });
+                  }}
+                  className="neu-field-slot w-full px-3 py-2.5 text-xs font-semibold text-slate-900 dark:text-white truncate"
+                >
+                  <option value="">Semua Rombel</option>
+                  {classes.map((c) => (
+                    <option key={c.id} value={c.id}>{c.name}</option>
+                  ))}
+                </select>
+              )}
+            </div>
+
+            {/* Filter Gender */}
+            <div className="col-span-1 lg:w-36 min-w-0">
               <select
-                value={selectedClass}
+                value={selectedGender}
                 onChange={(e) => {
-                  setSelectedClass(e.target.value);
-                  router.get('/students', { ...filters, class_id: e.target.value || undefined }, { preserveState: true });
+                  setSelectedGender(e.target.value);
+                  router.get('/students', { ...filters, gender: e.target.value || undefined }, { preserveState: true });
                 }}
-                className="neu-field-slot w-full px-3.5 py-2.5 text-xs font-semibold text-slate-900 dark:text-white"
+                className="neu-field-slot w-full px-3 py-2.5 text-xs font-semibold text-slate-900 dark:text-white truncate"
               >
-                <option value="">Semua Rombel/Kelas</option>
-                {classes.map((c) => (
-                  <option key={c.id} value={c.id}>{c.name}</option>
-                ))}
+                <option value="">Semua Gender</option>
+                <option value="Laki-laki">Laki-laki</option>
+                <option value="Perempuan">Perempuan</option>
               </select>
-            )}
-          </div>
+            </div>
 
-          {/* Filter Gender */}
-          <div>
-            <select
-              value={selectedGender}
-              onChange={(e) => {
-                setSelectedGender(e.target.value);
-                router.get('/students', { ...filters, gender: e.target.value || undefined }, { preserveState: true });
-              }}
-              className="neu-field-slot w-full px-3.5 py-2.5 text-xs font-semibold text-slate-900 dark:text-white"
-            >
-              <option value="">Semua Gender</option>
-              <option value="Laki-laki">Laki-laki</option>
-              <option value="Perempuan">Perempuan</option>
-            </select>
-          </div>
+            {/* Filter Status */}
+            <div className="col-span-1 lg:w-36 min-w-0">
+              <select
+                value={selectedStatus}
+                onChange={(e) => {
+                  setSelectedStatus(e.target.value);
+                  router.get('/students', { ...filters, status: e.target.value || undefined }, { preserveState: true });
+                }}
+                className="neu-field-slot w-full px-3 py-2.5 text-xs font-semibold text-slate-900 dark:text-white truncate"
+              >
+                <option value="">Semua Status</option>
+                <option value="Aktif">Aktif</option>
+                <option value="Lulus">Lulus</option>
+                <option value="Pindah">Pindah</option>
+                <option value="Keluar">Keluar</option>
+              </select>
+            </div>
 
-          {/* Filter Status / Reset */}
-          <div className="flex items-center gap-2">
-            <select
-              value={selectedStatus}
-              onChange={(e) => {
-                setSelectedStatus(e.target.value);
-                router.get('/students', { ...filters, status: e.target.value || undefined }, { preserveState: true });
-              }}
-              className="neu-field-slot flex-1 px-3.5 py-2.5 text-xs font-semibold text-slate-900 dark:text-white"
-            >
-              <option value="">Semua Status</option>
-              <option value="Aktif">Aktif</option>
-              <option value="Lulus">Lulus</option>
-              <option value="Pindah">Pindah</option>
-              <option value="Keluar">Keluar</option>
-            </select>
-
-            <button
-              type="button"
-              onClick={handleReset}
-              className="neu-btn-tactile px-3.5 py-2.5 rounded-xl text-xs font-bold text-slate-600 dark:text-slate-300"
-              title="Reset Filter"
-            >
-              Reset
-            </button>
+            {/* Reset Button (Guaranteed to NEVER overflow on any viewport) */}
+            <div className="col-span-1 lg:w-auto shrink-0">
+              <button
+                type="button"
+                onClick={handleReset}
+                className="neu-btn-tactile w-full lg:w-auto h-[38px] px-3.5 py-2 rounded-xl text-xs font-bold text-slate-600 dark:text-slate-300 flex items-center justify-center gap-1.5 hover:text-rose-600 dark:hover:text-rose-400 transition cursor-pointer whitespace-nowrap"
+                title="Reset Semua Filter"
+              >
+                <RotateCcw className="h-3.5 w-3.5 shrink-0" />
+                <span>Reset</span>
+              </button>
+            </div>
           </div>
         </form>
       </div>

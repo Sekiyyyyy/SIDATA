@@ -11,8 +11,7 @@ import {
   ShieldCheck, 
   TrendingUp, 
   LogOut, 
-  UserCircle2, 
-  Calendar
+  UserCircle2
 } from 'lucide-react';
 import { SharedProps } from '@/Types';
 import { cn } from '@/Utils/cn';
@@ -165,17 +164,6 @@ export default function BottomNav() {
               >
                 <X className="h-4.5 w-4.5" />
               </button>
-            </div>
-
-            {/* School & Academic Period Pill */}
-            <div className="my-2.5 neu-inset-sm p-2.5 rounded-2xl flex items-center justify-between text-xs">
-              <div className="flex items-center gap-2 text-slate-600 dark:text-slate-300 font-semibold text-[11px]">
-                <Calendar className="h-3.5 w-3.5 text-blue-500" />
-                <span>T.A. {activeAcademicYear?.name || '2024/2025'}</span>
-              </div>
-              <span className="text-blue-600 dark:text-blue-400 font-extrabold neu-badge px-2 py-0.5 rounded-lg text-[10px]">
-                Sem. {activeSemester?.type || 'Ganjil'}
-              </span>
             </div>
 
             {/* User Role Badge */}

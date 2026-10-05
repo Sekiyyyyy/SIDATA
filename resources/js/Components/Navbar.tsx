@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { usePage, Link, router } from '@inertiajs/react';
 import { 
   Search, 
-  Calendar, 
   LogOut, 
   UserCircle2,
   PanelLeftClose,
@@ -76,15 +75,8 @@ export default function Navbar({ isMinimized = false, onToggleMinimize }: Navbar
         </form>
       </div>
 
-      {/* Right: Academic Year, Theme Switcher & Role Quick-Switcher */}
+      {/* Right: Theme Switcher & Role Badge */}
       <div className="flex items-center gap-1.5 sm:gap-3">
-        {/* Active Academic Year Badge (Desktop) */}
-        <div className="neu-flat-sm hidden md:flex items-center gap-2 rounded-xl px-3 py-1.5 text-xs font-semibold text-slate-600 dark:text-slate-300">
-          <Calendar className="h-3.5 w-3.5 text-blue-500" />
-          <span>Tahun: {activeAcademicYear?.name || '2024/2025'}</span>
-          <span className="text-slate-300 dark:text-slate-700">•</span>
-          <span className="text-blue-600 dark:text-blue-400 font-bold">Sem. {activeSemester?.type || 'Ganjil'}</span>
-        </div>
 
         {/* Theme Switcher */}
         <div className="hidden sm:block">

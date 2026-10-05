@@ -52,16 +52,29 @@ export default function PrintRaport({ student, school, semester, semesterType }:
       {/* A4 Printable Sheet */}
       <div className="max-w-[210mm] mx-auto bg-white p-10 print:p-6 shadow-xl print:shadow-none print:w-full border border-slate-200 print:border-none space-y-6">
         {/* Kop Rapor */}
-        <div className="text-center border-b-2 border-slate-900 pb-3">
-          <h2 className="text-sm uppercase tracking-widest font-semibold text-slate-600">
-            LAPORAN HASIL BELAJAR PESERTA DIDIK
-          </h2>
-          <h1 className="text-lg font-bold uppercase tracking-wider text-slate-900 mt-0.5">
-            {school?.name || 'SMK NEGERI 1 BERINGIN'}
-          </h1>
-          <p className="text-xs text-slate-500">
-            KURIKULUM MERDEKA • KABUPATEN DELI SERDANG
-          </p>
+        <div className="flex items-center justify-between border-b-2 border-slate-900 pb-3 gap-4">
+          <img 
+            src="/images/logo.png" 
+            alt="Logo Sekolah" 
+            className="h-16 w-16 object-contain shrink-0" 
+            onError={(e) => { e.currentTarget.src = '/assets/logo.png'; }} 
+          />
+          <div className="text-center flex-1">
+            <h2 className="text-xs uppercase tracking-widest font-semibold text-slate-600">
+              LAPORAN HASIL BELAJAR PESERTA DIDIK
+            </h2>
+            <h1 className="text-lg font-bold uppercase tracking-wider text-slate-900 mt-0.5">
+              {school?.name || 'SMK NEGERI 1 BERINGIN'}
+            </h1>
+            <p className="text-[11px] text-slate-500">
+              KURIKULUM MERDEKA • KABUPATEN DELI SERDANG
+            </p>
+          </div>
+          <img 
+            src="/assets/kolaborasi-sumut-berkah.png" 
+            alt="Kolaborasi Sumut Berkah" 
+            className="h-10 w-auto object-contain shrink-0" 
+          />
         </div>
 
         {/* Identitas Siswa Grid */}

@@ -23,8 +23,8 @@ import {
   GraduationCap,
   Calendar,
   Building2,
-  UserCheck,
-  Sparkles
+  Sparkles,
+  Trophy
 } from 'lucide-react';
 
 interface StudentExtended extends Student {
@@ -208,6 +208,261 @@ function MobileCard({
         )}
       </div>
       <div className="space-y-3">{children}</div>
+    </div>
+  );
+}
+
+// ==============================================================
+// EDITABLE PAPER SECTIONS (ASPEK C, D, E)
+// ==============================================================
+
+function PaperP5Section({
+  theme1,
+  theme2,
+  theme3,
+  onTheme1Change,
+  onTheme2Change,
+  onTheme3Change,
+  dimensions,
+  onDimChange,
+}: {
+  theme1: string;
+  theme2: string;
+  theme3: string;
+  onTheme1Change: (val: string) => void;
+  onTheme2Change: (val: string) => void;
+  onTheme3Change: (val: string) => void;
+  dimensions: Array<{ no: string; dimensi: string; elemen: string; sub_elemen: string; target: string }>;
+  onDimChange: (idx: number, field: 'elemen' | 'sub_elemen' | 'target', val: string) => void;
+}) {
+  return (
+    <div className="mb-2">
+      <div className="font-bold text-[10px] uppercase text-slate-900 mb-0.5 flex items-center justify-between">
+        <span>C. PROJEK PENGUATAN PROFIL PELAJAR PANCASILA (P5)</span>
+        <span className="text-[8px] font-normal text-slate-500 italic print:hidden">(Dapat diedit langsung)</span>
+      </div>
+      <div className="text-[8.5px] mb-1 text-slate-800 flex flex-wrap gap-x-3 gap-y-1 items-center bg-slate-50/70 p-1 rounded border border-slate-200">
+        <span className="flex items-center gap-1">
+          <strong>Tema 1:</strong>
+          <input
+            type="text"
+            value={theme1}
+            onChange={(e) => onTheme1Change(e.target.value)}
+            placeholder="Judul Tema 1..."
+            className="border-b border-dotted px-1 py-0 text-[8.5px] w-48 font-medium bg-transparent focus:bg-amber-50"
+          />
+        </span>
+        <span className="flex items-center gap-1">
+          <strong>Tema 2:</strong>
+          <input
+            type="text"
+            value={theme2}
+            onChange={(e) => onTheme2Change(e.target.value)}
+            placeholder="Judul Tema 2..."
+            className="border-b border-dotted px-1 py-0 text-[8.5px] w-48 font-medium bg-transparent focus:bg-amber-50"
+          />
+        </span>
+        <span className="flex items-center gap-1">
+          <strong>Tema 3:</strong>
+          <input
+            type="text"
+            value={theme3}
+            onChange={(e) => onTheme3Change(e.target.value)}
+            placeholder="Judul Tema 3..."
+            className="border-b border-dotted px-1 py-0 text-[8.5px] w-48 font-medium bg-transparent focus:bg-amber-50"
+          />
+        </span>
+      </div>
+      <table className="w-full border border-slate-900 text-[8.5px] border-collapse">
+        <thead>
+          <tr className="border-b border-slate-900 bg-slate-100 font-bold text-center">
+            <th className="border-r border-slate-900 p-0.5 w-6">No.</th>
+            <th className="border-r border-slate-900 p-0.5 w-44 text-left">Dimensi</th>
+            <th className="border-r border-slate-900 p-0.5 w-32 text-left">Elemen</th>
+            <th className="border-r border-slate-900 p-0.5 text-left">Sub-Elemen</th>
+            <th className="p-0.5 w-36">Target Fase/Pencapaian</th>
+          </tr>
+        </thead>
+        <tbody className="divide-y divide-slate-900">
+          {dimensions.map((dim, dIdx) => (
+            <tr key={dIdx}>
+              <td className="border-r border-slate-900 p-0.5 text-center">{dIdx + 1}.</td>
+              <td className="border-r border-slate-900 p-0.5 font-medium">{dim.dimensi}</td>
+              <td className="border-r border-slate-900 p-0.5">
+                <input
+                  type="text"
+                  value={dim.elemen}
+                  onChange={(e) => onDimChange(dIdx, 'elemen', e.target.value)}
+                  placeholder="Elemen..."
+                  className="w-full border-b border-dotted text-[8.5px] px-1 bg-transparent focus:bg-amber-50"
+                />
+              </td>
+              <td className="border-r border-slate-900 p-0.5">
+                <input
+                  type="text"
+                  value={dim.sub_elemen}
+                  onChange={(e) => onDimChange(dIdx, 'sub_elemen', e.target.value)}
+                  placeholder="Sub-elemen..."
+                  className="w-full border-b border-dotted text-[8.5px] px-1 bg-transparent focus:bg-amber-50"
+                />
+              </td>
+              <td className="p-0.5 text-center">
+                <select
+                  value={dim.target}
+                  onChange={(e) => onDimChange(dIdx, 'target', e.target.value)}
+                  className="w-full text-center text-[8.5px] font-semibold bg-transparent border-none cursor-pointer focus:bg-amber-50"
+                >
+                  <option value="-">-</option>
+                  <option value="Mulai berkembang">Mulai berkembang</option>
+                  <option value="Sedang berkembang">Sedang berkembang</option>
+                  <option value="Berkembang Sesuai Harapan">Berkembang Sesuai Harapan</option>
+                  <option value="Sangat Berkembang">Sangat Berkembang</option>
+                </select>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  );
+}
+
+function PaperExtraSection({
+  extras,
+  onExtraChange,
+}: {
+  extras: Array<{ no: string; name: string; notes: string }>;
+  onExtraChange: (idx: number, field: 'name' | 'notes', val: string) => void;
+}) {
+  return (
+    <div className="mb-2">
+      <div className="font-bold text-[10px] uppercase text-slate-900 mb-0.5 flex items-center justify-between">
+        <span>D. EKSTRAKURIKULER</span>
+        <span className="text-[8px] font-normal text-slate-500 italic print:hidden">(Dapat diedit langsung)</span>
+      </div>
+      <table className="w-full border border-slate-900 text-[9px] border-collapse">
+        <thead>
+          <tr className="border-b border-slate-900 bg-slate-100 font-bold text-center">
+            <th className="border-r border-slate-900 p-0.5 w-8">No.</th>
+            <th className="border-r border-slate-900 p-0.5 w-64 text-left">Ekstrakurikuler</th>
+            <th className="p-0.5 text-left">Keterangan</th>
+          </tr>
+        </thead>
+        <tbody className="divide-y divide-slate-900">
+          {extras.map((ext, eIdx) => (
+            <tr key={eIdx}>
+              <td className="border-r border-slate-900 p-0.5 text-center">{eIdx + 1}.</td>
+              <td className="border-r border-slate-900 p-0.5">
+                <input
+                  type="text"
+                  value={ext.name}
+                  onChange={(e) => onExtraChange(eIdx, 'name', e.target.value)}
+                  placeholder="Nama Ekstrakurikuler..."
+                  className="w-full border-b border-dotted px-1 font-medium bg-transparent text-[9px] focus:bg-amber-50"
+                />
+              </td>
+              <td className="p-0.5">
+                <input
+                  type="text"
+                  value={ext.notes}
+                  onChange={(e) => onExtraChange(eIdx, 'notes', e.target.value)}
+                  placeholder="Keterangan capaian / predikat..."
+                  className="w-full border-b border-dotted px-1 bg-transparent text-[9px] focus:bg-amber-50"
+                />
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  );
+}
+
+function PaperAchievementSection({
+  achievements,
+  onAchChange,
+}: {
+  achievements: Array<{ type: string; level: string; name: string; year: string; organizer: string; rank: string }>;
+  onAchChange: (idx: number, field: string, val: string) => void;
+}) {
+  return (
+    <div className="mb-3">
+      <div className="font-bold text-[10.5px] uppercase text-slate-900 mb-1 flex items-center justify-between">
+        <span>E. PRESTASI</span>
+        <span className="text-[8.5px] font-normal text-slate-500 italic print:hidden">(Dapat diedit langsung)</span>
+      </div>
+      <table className="w-full border border-slate-900 text-[9.5px] border-collapse text-center">
+        <thead>
+          <tr className="border-b border-slate-900 bg-slate-100 font-bold">
+            <th className="border-r border-slate-900 p-1 w-28">Jenis Prestasi</th>
+            <th className="border-r border-slate-900 p-1 w-28">Tingkat Prestasi</th>
+            <th className="border-r border-slate-900 p-1">Nama Prestasi</th>
+            <th className="border-r border-slate-900 p-1 w-20">Tahun Prestasi</th>
+            <th className="border-r border-slate-900 p-1 w-32">Penyelenggara</th>
+            <th className="p-1 w-24">Peringkat</th>
+          </tr>
+        </thead>
+        <tbody className="divide-y divide-slate-900">
+          {achievements.map((ach, aIdx) => (
+            <tr key={aIdx}>
+              <td className="border-r border-slate-900 p-1">
+                <input
+                  type="text"
+                  value={ach.type}
+                  onChange={(e) => onAchChange(aIdx, 'type', e.target.value)}
+                  placeholder="Akademik / Seni..."
+                  className="w-full text-center border-b border-dotted px-1 bg-transparent text-[9px] focus:bg-amber-50"
+                />
+              </td>
+              <td className="border-r border-slate-900 p-1">
+                <input
+                  type="text"
+                  value={ach.level}
+                  onChange={(e) => onAchChange(aIdx, 'level', e.target.value)}
+                  placeholder="Sekolah / Kota..."
+                  className="w-full text-center border-b border-dotted px-1 bg-transparent text-[9px] focus:bg-amber-50"
+                />
+              </td>
+              <td className="border-r border-slate-900 p-1">
+                <input
+                  type="text"
+                  value={ach.name}
+                  onChange={(e) => onAchChange(aIdx, 'name', e.target.value)}
+                  placeholder="Nama Prestasi..."
+                  className="w-full text-center border-b border-dotted px-1 font-medium bg-transparent text-[9px] focus:bg-amber-50"
+                />
+              </td>
+              <td className="border-r border-slate-900 p-1">
+                <input
+                  type="text"
+                  value={ach.year}
+                  onChange={(e) => onAchChange(aIdx, 'year', e.target.value)}
+                  placeholder="Tahun..."
+                  className="w-full text-center border-b border-dotted px-1 font-mono bg-transparent text-[9px] focus:bg-amber-50"
+                />
+              </td>
+              <td className="border-r border-slate-900 p-1">
+                <input
+                  type="text"
+                  value={ach.organizer}
+                  onChange={(e) => onAchChange(aIdx, 'organizer', e.target.value)}
+                  placeholder="Penyelenggara..."
+                  className="w-full text-center border-b border-dotted px-1 bg-transparent text-[9px] focus:bg-amber-50"
+                />
+              </td>
+              <td className="p-1">
+                <input
+                  type="text"
+                  value={ach.rank}
+                  onChange={(e) => onAchChange(aIdx, 'rank', e.target.value)}
+                  placeholder="Peringkat..."
+                  className="w-full text-center border-b border-dotted px-1 font-bold bg-transparent text-[9px] focus:bg-amber-50"
+                />
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
     </div>
   );
 }
@@ -468,6 +723,80 @@ export default function StudentShow({
     { no: '7.', name: 'Mata Pelajaran Pilihan****: b. Pemrograman Gim', score: isSampleStudent ? 89 : '', comp: isSampleStudent ? 'Memahami source code dan melakukan pembaruan gim' : '', kktp: isSampleStudent ? 78 : '' },
   ];
 
+  const makeDefaultP5Dims = (items?: any[]) => [
+    { no: '1.', dimensi: 'Beriman, Bertakwa kepada Tuhan YME dan Berakhlak Mulia', elemen: items?.[0]?.elemen || '', sub_elemen: items?.[0]?.sub_elemen || '', target: items?.[0]?.target || '-' },
+    { no: '2.', dimensi: 'Berkebhinekaan Global', elemen: items?.[1]?.elemen || '', sub_elemen: items?.[1]?.sub_elemen || '', target: items?.[1]?.target || '-' },
+    { no: '3.', dimensi: 'Bergotong Royong', elemen: items?.[2]?.elemen || '', sub_elemen: items?.[2]?.sub_elemen || '', target: items?.[2]?.target || '-' },
+    { no: '4.', dimensi: 'Mandiri', elemen: items?.[3]?.elemen || '', sub_elemen: items?.[3]?.sub_elemen || '', target: items?.[3]?.target || '-' },
+    { no: '5.', dimensi: 'Bernalar Kritis', elemen: items?.[4]?.elemen || '', sub_elemen: items?.[4]?.sub_elemen || '', target: items?.[4]?.target || '-' },
+    { no: '6.', dimensi: 'Kreatif', elemen: items?.[5]?.elemen || '', sub_elemen: items?.[5]?.sub_elemen || '', target: items?.[5]?.target || '-' },
+  ];
+
+  const rawP5X1 = makeDefaultP5Dims(isSampleStudent ? [
+    { elemen: 'Akhlak kepada alam', sub_elemen: 'Mewujudkan dan membangun kesadaran peduli lingkungan', target: 'Mulai berkembang' },
+    { elemen: '-', sub_elemen: '-', target: '-' },
+    { elemen: 'Kolaborasi', sub_elemen: 'Bersinergi untuk kebaikan', target: 'Mulai berkembang' },
+    { elemen: '-', sub_elemen: '-', target: '-' },
+    { elemen: '-', sub_elemen: '-', target: '-' },
+    { elemen: 'Keluwesan berpikir', sub_elemen: 'Bereksperimen secara kreatif', target: 'Mulai berkembang' },
+  ] : []);
+
+  const rawP5X2 = makeDefaultP5Dims(isSampleStudent ? [
+    { elemen: 'Akhlak pribadi', sub_elemen: 'Menjaga integritas dan kejujuran diri', target: 'Berkembang Sesuai Harapan' },
+    { elemen: 'Mengenal budaya', sub_elemen: 'Memahami toleransi keberagaman suku', target: 'Berkembang Sesuai Harapan' },
+    { elemen: 'Kerjasama tim', sub_elemen: 'Aktif berbagi tugas dan tolong menolong', target: 'Berkembang Sesuai Harapan' },
+    { elemen: 'Regulasi diri', sub_elemen: 'Mengatur waktu belajar dan praktek coding', target: 'Berkembang Sesuai Harapan' },
+    { elemen: 'Memproses ide', sub_elemen: 'Menjelaskan argumen logis algoritma', target: 'Berkembang Sesuai Harapan' },
+    { elemen: 'Karya mandiri', sub_elemen: 'Menghasilkan karya media interaktif', target: 'Berkembang Sesuai Harapan' },
+  ] : []);
+
+  const rawP5Xi1 = makeDefaultP5Dims(isSampleStudent ? [
+    { elemen: 'Akhlak kepada Manusia', sub_elemen: 'Melakukan perbuatan baik kepada sesama', target: 'Berkembang Sesuai Harapan' },
+    { elemen: '-', sub_elemen: '-', target: '-' },
+    { elemen: 'Kerjasama tim', sub_elemen: 'Kolaborasi proyek web', target: 'Berkembang Sesuai Harapan' },
+    { elemen: 'Inisiatif mandiri', sub_elemen: 'Eksplorasi framework web', target: 'Berkembang Sesuai Harapan' },
+    { elemen: 'Analisis logika', sub_elemen: 'Problem solving algoritma', target: 'Berkembang Sesuai Harapan' },
+    { elemen: 'Kreativitas desain', sub_elemen: 'Prototipe antarmuka sistem', target: 'Berkembang Sesuai Harapan' },
+  ] : []);
+
+  const rawP5Xi2 = makeDefaultP5Dims(isSampleStudent ? [
+    { elemen: 'Integritas etika', sub_elemen: 'Tanggung jawab kode etik IT', target: 'Berkembang Sesuai Harapan' },
+    { elemen: 'Wawasan global', sub_elemen: 'Standar teknologi internasional', target: 'Berkembang Sesuai Harapan' },
+    { elemen: 'Sinergi tim kerja', sub_elemen: 'Manajemen sprint scrum', target: 'Berkembang Sesuai Harapan' },
+    { elemen: 'Kemandirian profesional', sub_elemen: 'Penyelesaian bug mandiri', target: 'Berkembang Sesuai Harapan' },
+    { elemen: 'Refleksi teknis', sub_elemen: 'Code review rekan tim', target: 'Berkembang Sesuai Harapan' },
+    { elemen: 'Inovasi produk', sub_elemen: 'Aplikasi fungsional bernilai guna', target: 'Berkembang Sesuai Harapan' },
+  ] : []);
+
+  const rawP5Xii1 = makeDefaultP5Dims(isSampleStudent ? [
+    { elemen: 'Etika industri', sub_elemen: 'Disiplin dan loyalitas tempat PKL', target: 'Sangat Berkembang' },
+    { elemen: 'Komunikasi profesional', sub_elemen: 'Presentasi hasil kerja ke pembimbing', target: 'Sangat Berkembang' },
+    { elemen: 'Gotong royong tim', sub_elemen: 'Bekerja sama dalam divisi engineering', target: 'Sangat Berkembang' },
+    { elemen: 'Kemandirian kerja', sub_elemen: 'Menyelesaikan modul tepat waktu', target: 'Sangat Berkembang' },
+    { elemen: 'Troubleshooting kritis', sub_elemen: 'Menganalisis kegagalan sistem', target: 'Sangat Berkembang' },
+    { elemen: 'Kreativitas solusi', sub_elemen: 'Optimalisasi arsitektur aplikasi', target: 'Sangat Berkembang' },
+  ] : []);
+
+  const rawP5Xii2 = makeDefaultP5Dims(isSampleStudent ? [
+    { elemen: 'Akhlak mulia', sub_elemen: 'Kesiapan berbakti pada masyarakat', target: 'Sangat Berkembang' },
+    { elemen: 'Wawasan kebangsaan', sub_elemen: 'Karya untuk kemajuan Indonesia', target: 'Sangat Berkembang' },
+    { elemen: 'Solidaritas alumni', sub_elemen: 'Membangun jejaring karir positif', target: 'Sangat Berkembang' },
+    { elemen: 'Kemandirian hidup', sub_elemen: 'Siap bekerja dan wirausaha', target: 'Sangat Berkembang' },
+    { elemen: 'Visi masa depan', sub_elemen: 'Perencanaan studi lanjut dan karir', target: 'Sangat Berkembang' },
+    { elemen: 'Karya inovatif akhir', sub_elemen: 'Tugas akhir bersertifikasi BNSP', target: 'Sangat Berkembang' },
+  ] : []);
+
+  const defaultExtras = (sampleIdx: number = 0) => [
+    { no: '1.', name: isSampleStudent ? 'Praja Muda Karana (Pramuka)' : '', notes: isSampleStudent ? 'Aktif dalam kegiatan kepramukaan sekolah' : '' },
+    { no: '2.', name: isSampleStudent ? (sampleIdx % 2 === 0 ? 'PMR (Palang Merah Remaja)' : 'English Conversation Club') : '', notes: isSampleStudent ? 'Melaksanakan kegiatan dengan sangat baik' : '' },
+    { no: '3.', name: '', notes: '' },
+  ];
+
+  const defaultAchievements = () => [
+    { type: isSampleStudent ? 'Akademik' : '', level: isSampleStudent ? 'Kabupaten/Kota' : '', name: isSampleStudent ? 'Lomba Cerdas Cermat Jenjang SMK' : '', year: isSampleStudent ? '2023' : '', organizer: isSampleStudent ? 'Dinas Pendidikan Deli Serdang' : '', rank: isSampleStudent ? 'Peserta Berprestasi' : '' },
+    { type: isSampleStudent ? 'Teknologi' : '', level: isSampleStudent ? 'Sekolah' : '', name: isSampleStudent ? 'Juara 1 Web Design SMKN 1 Beringin' : '', year: isSampleStudent ? '2024' : '', organizer: isSampleStudent ? 'SMKN 1 Beringin' : '', rank: isSampleStudent ? 'Juara I' : '' },
+  ];
+
   const { data, setData, put, processing, errors } = useForm({
     // LEMBAR 1: IDENTITAS LENGKAP
     nomor_urut: student.nomor_urut || (isSampleStudent ? '1' : ''),
@@ -645,6 +974,49 @@ export default function StudentShow({
     scores_xii1: rawScoresXii1,
     scores_xii2: rawScoresXii2,
 
+    // ASPEK C, D, E (P5, EKSTRAKURIKULER, PRESTASI) 6 SEMESTER
+    p5_theme_1_x1: isSampleStudent ? 'Pembuatan Pupuk Organik (Eco enzym)' : '',
+    p5_theme_2_x1: isSampleStudent ? "Senam pagi setiap hari jum'at" : '',
+    p5_theme_3_x1: isSampleStudent ? 'Kunjungan industri ke PT. Braja Mitra Nusantara' : '',
+    p5_dimensions_x1: rawP5X1,
+    extras_x1: defaultExtras(0),
+    achievements_x1: defaultAchievements(),
+
+    p5_theme_1_x2: isSampleStudent ? 'Budaya Hidup Bersih & Sehat (K3LH)' : '',
+    p5_theme_2_x2: isSampleStudent ? 'Kebhinekaan Nusantara' : '',
+    p5_theme_3_x2: isSampleStudent ? 'Kewirausahaan Mandiri' : '',
+    p5_dimensions_x2: rawP5X2,
+    extras_x2: defaultExtras(1),
+    achievements_x2: defaultAchievements(),
+
+    p5_theme_1_xi1: isSampleStudent ? 'Sehat Jasmani' : '',
+    p5_theme_2_xi1: isSampleStudent ? 'Siap Bekerja' : '',
+    p5_theme_3_xi1: isSampleStudent ? 'Siap Berkarya' : '',
+    p5_dimensions_xi1: rawP5Xi1,
+    extras_xi1: defaultExtras(0),
+    achievements_xi1: defaultAchievements(),
+
+    p5_theme_1_xi2: isSampleStudent ? 'Kewirausahaan Digital' : '',
+    p5_theme_2_xi2: isSampleStudent ? 'Rekayasa Perangkat Lunak Berkelanjutan' : '',
+    p5_theme_3_xi2: isSampleStudent ? 'Etika Profesi IT' : '',
+    p5_dimensions_xi2: rawP5Xi2,
+    extras_xi2: defaultExtras(1),
+    achievements_xi2: defaultAchievements(),
+
+    p5_theme_1_xii1: isSampleStudent ? 'Inovasi Produk Digital Industri' : '',
+    p5_theme_2_xii1: isSampleStudent ? 'Integritas & Etika Kerja Profesional' : '',
+    p5_theme_3_xii1: isSampleStudent ? 'Kepemimpinan Lapangan' : '',
+    p5_dimensions_xii1: rawP5Xii1,
+    extras_xii1: defaultExtras(0),
+    achievements_xii1: defaultAchievements(),
+
+    p5_theme_1_xii2: isSampleStudent ? 'Kesiapan Karir & Dunia Usaha' : '',
+    p5_theme_2_xii2: isSampleStudent ? 'Kewirausahaan Mandiri Berkelanjutan' : '',
+    p5_theme_3_xii2: isSampleStudent ? 'Bakti Alumni untuk Negeri' : '',
+    p5_dimensions_xii2: rawP5Xii2,
+    extras_xii2: defaultExtras(1),
+    achievements_xii2: defaultAchievements(),
+
     status: student.status || 'Aktif',
     current_class_id: student.current_class_id || '',
   });
@@ -671,6 +1043,24 @@ export default function StudentShow({
     const list = [...data[semKey]];
     list[index] = { ...list[index], [field]: field === 'comp' ? val : Number(val) };
     setData(semKey, list);
+  };
+
+  const handleP5DimChange = (dimKey: string, idx: number, field: string, val: string) => {
+    const list = [...(data as any)[dimKey]];
+    list[idx] = { ...list[idx], [field]: val };
+    setData(dimKey as any, list);
+  };
+
+  const handleExtraChange = (extraKey: string, idx: number, field: string, val: string) => {
+    const list = [...(data as any)[extraKey]];
+    list[idx] = { ...list[idx], [field]: val };
+    setData(extraKey as any, list);
+  };
+
+  const handleAchievementChange = (achKey: string, idx: number, field: string, val: string) => {
+    const list = [...(data as any)[achKey]];
+    list[idx] = { ...list[idx], [field]: val };
+    setData(achKey as any, list);
   };
 
   const handleFormSubmit = (e: React.FormEvent) => {
@@ -1526,30 +1916,175 @@ export default function StudentShow({
                   </div>
                 </MobileCard>
 
-                {/* Kegiatan Ekstrakurikuler Semester Ini */}
-                <MobileCard title="Kegiatan Ekstrakurikuler Semester Ini" icon={Award}>
-                  <div className="space-y-2">
-                    <div className="p-2.5 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200/70 dark:border-slate-700/70">
-                      <div className="flex items-center justify-between text-xs font-bold text-slate-900 dark:text-white">
-                        <span>1. Praja Muda Karana (Pramuka)</span>
-                        <span className="text-[10px] px-2 py-0.5 rounded bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300">Wajib</span>
-                      </div>
-                      <p className="text-[11px] text-slate-600 dark:text-slate-400 mt-1">
-                        Aktif dalam kegiatan kepramukaan sekolah
-                      </p>
-                    </div>
+                {/* Aspek C: Projek Penguatan Profil Pelajar Pancasila (P5) */}
+                {(() => {
+                  const semKeySuffix = mobileRaporSem.replace('scores_', '');
+                  const p5Dims = (data as any)[`p5_dimensions_${semKeySuffix}`] || [];
+                  const extras = (data as any)[`extras_${semKeySuffix}`] || [];
+                  const achs = (data as any)[`achievements_${semKeySuffix}`] || [];
 
-                    <div className="p-2.5 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200/70 dark:border-slate-700/70">
-                      <div className="flex items-center justify-between text-xs font-bold text-slate-900 dark:text-white">
-                        <span>2. PMR (Palang Merah Remaja)</span>
-                        <span className="text-[10px] px-2 py-0.5 rounded bg-blue-100 text-blue-800 dark:bg-blue-950 dark:text-blue-300">Pilihan</span>
-                      </div>
-                      <p className="text-[11px] text-slate-600 dark:text-slate-400 mt-1">
-                        Melaksanakan kegiatan PMR dengan sangat baik
-                      </p>
-                    </div>
-                  </div>
-                </MobileCard>
+                  return (
+                    <>
+                      {/* C. P5 Card */}
+                      <MobileCard title="C. Projek Penguatan Profil Pelajar Pancasila (P5)" icon={Sparkles} badge="Kurikulum Merdeka">
+                        <div className="space-y-3">
+                          <div className="space-y-2 p-2.5 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700">
+                            <span className="text-[11px] font-bold text-slate-700 dark:text-slate-300 block">Tema Projek Semester Ini:</span>
+                            <MobileInput
+                              label="Tema 1"
+                              value={(data as any)[`p5_theme_1_${semKeySuffix}`] || ''}
+                              onChange={(v) => setData(`p5_theme_1_${semKeySuffix}` as any, v)}
+                              placeholder="Tema 1 Projek P5..."
+                            />
+                            <MobileInput
+                              label="Tema 2"
+                              value={(data as any)[`p5_theme_2_${semKeySuffix}`] || ''}
+                              onChange={(v) => setData(`p5_theme_2_${semKeySuffix}` as any, v)}
+                              placeholder="Tema 2 Projek P5..."
+                            />
+                            <MobileInput
+                              label="Tema 3"
+                              value={(data as any)[`p5_theme_3_${semKeySuffix}`] || ''}
+                              onChange={(v) => setData(`p5_theme_3_${semKeySuffix}` as any, v)}
+                              placeholder="Tema 3 Projek P5..."
+                            />
+                          </div>
+
+                          <div className="space-y-2.5">
+                            <span className="text-[11px] font-bold text-slate-700 dark:text-slate-300 block">Penilaian 6 Dimensi P5:</span>
+                            {p5Dims.map((dim: any, dIdx: number) => (
+                              <div key={dIdx} className="p-2.5 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200/70 dark:border-slate-700/70 space-y-1.5">
+                                <div className="text-xs font-bold text-slate-900 dark:text-white">
+                                  {dIdx + 1}. {dim.dimensi}
+                                </div>
+                                <div className="grid grid-cols-2 gap-2">
+                                  <div>
+                                    <label className="text-[10px] text-slate-500 font-semibold block mb-0.5">Elemen</label>
+                                    <input
+                                      type="text"
+                                      value={dim.elemen}
+                                      onChange={(e) => handleP5DimChange(`p5_dimensions_${semKeySuffix}`, dIdx, 'elemen', e.target.value)}
+                                      placeholder="Elemen..."
+                                      className="neu-field-slot w-full px-2 py-1 text-xs"
+                                    />
+                                  </div>
+                                  <div>
+                                    <label className="text-[10px] text-slate-500 font-semibold block mb-0.5">Sub-Elemen</label>
+                                    <input
+                                      type="text"
+                                      value={dim.sub_elemen}
+                                      onChange={(e) => handleP5DimChange(`p5_dimensions_${semKeySuffix}`, dIdx, 'sub_elemen', e.target.value)}
+                                      placeholder="Sub-elemen..."
+                                      className="neu-field-slot w-full px-2 py-1 text-xs"
+                                    />
+                                  </div>
+                                </div>
+                                <div>
+                                  <label className="text-[10px] text-slate-500 font-semibold block mb-0.5">Target Fase / Capaian</label>
+                                  <select
+                                    value={dim.target}
+                                    onChange={(e) => handleP5DimChange(`p5_dimensions_${semKeySuffix}`, dIdx, 'target', e.target.value)}
+                                    className="neu-field-slot w-full px-2 py-1.5 text-xs font-semibold"
+                                  >
+                                    <option value="-">- Belum Dinilai -</option>
+                                    <option value="Mulai berkembang">Mulai berkembang</option>
+                                    <option value="Sedang berkembang">Sedang berkembang</option>
+                                    <option value="Berkembang Sesuai Harapan">Berkembang Sesuai Harapan</option>
+                                    <option value="Sangat Berkembang">Sangat Berkembang</option>
+                                  </select>
+                                </div>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                      </MobileCard>
+
+                      {/* D. Ekstrakurikuler Card */}
+                      <MobileCard title="D. Kegiatan Ekstrakurikuler" icon={Award} badge="Bisa Diedit">
+                        <div className="space-y-3">
+                          {extras.map((ext: any, eIdx: number) => (
+                            <div key={eIdx} className="p-2.5 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200/70 dark:border-slate-700/70 space-y-1.5">
+                              <div className="text-xs font-bold text-slate-900 dark:text-white">
+                                Ekstrakurikuler #{eIdx + 1}
+                              </div>
+                              <input
+                                type="text"
+                                value={ext.name}
+                                onChange={(e) => handleExtraChange(`extras_${semKeySuffix}`, eIdx, 'name', e.target.value)}
+                                placeholder="Nama Ekstrakurikuler (contoh: Pramuka)..."
+                                className="neu-field-slot w-full px-2.5 py-1.5 text-xs font-semibold"
+                              />
+                              <input
+                                type="text"
+                                value={ext.notes}
+                                onChange={(e) => handleExtraChange(`extras_${semKeySuffix}`, eIdx, 'notes', e.target.value)}
+                                placeholder="Keterangan capaian / predikat..."
+                                className="neu-field-slot w-full px-2.5 py-1.5 text-xs"
+                              />
+                            </div>
+                          ))}
+                        </div>
+                      </MobileCard>
+
+                      {/* E. Prestasi Card */}
+                      <MobileCard title="E. Prestasi & Penghargaan" icon={Trophy} badge="Bisa Diedit">
+                        <div className="space-y-3">
+                          {achs.map((ach: any, aIdx: number) => (
+                            <div key={aIdx} className="p-2.5 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200/70 dark:border-slate-700/70 space-y-2">
+                              <div className="text-xs font-bold text-slate-900 dark:text-white">
+                                Prestasi #{aIdx + 1}
+                              </div>
+                              <div className="grid grid-cols-2 gap-2">
+                                <input
+                                  type="text"
+                                  value={ach.name}
+                                  onChange={(e) => handleAchievementChange(`achievements_${semKeySuffix}`, aIdx, 'name', e.target.value)}
+                                  placeholder="Nama Prestasi / Lomba..."
+                                  className="neu-field-slot col-span-2 px-2.5 py-1.5 text-xs font-bold"
+                                />
+                                <input
+                                  type="text"
+                                  value={ach.type}
+                                  onChange={(e) => handleAchievementChange(`achievements_${semKeySuffix}`, aIdx, 'type', e.target.value)}
+                                  placeholder="Jenis (Akademik / Seni)..."
+                                  className="neu-field-slot px-2 py-1 text-xs"
+                                />
+                                <input
+                                  type="text"
+                                  value={ach.level}
+                                  onChange={(e) => handleAchievementChange(`achievements_${semKeySuffix}`, aIdx, 'level', e.target.value)}
+                                  placeholder="Tingkat (Sekolah / Kota)..."
+                                  className="neu-field-slot px-2 py-1 text-xs"
+                                />
+                                <input
+                                  type="text"
+                                  value={ach.year}
+                                  onChange={(e) => handleAchievementChange(`achievements_${semKeySuffix}`, aIdx, 'year', e.target.value)}
+                                  placeholder="Tahun..."
+                                  className="neu-field-slot px-2 py-1 text-xs font-mono"
+                                />
+                                <input
+                                  type="text"
+                                  value={ach.rank}
+                                  onChange={(e) => handleAchievementChange(`achievements_${semKeySuffix}`, aIdx, 'rank', e.target.value)}
+                                  placeholder="Peringkat (Juara 1)..."
+                                  className="neu-field-slot px-2 py-1 text-xs"
+                                />
+                                <input
+                                  type="text"
+                                  value={ach.organizer}
+                                  onChange={(e) => handleAchievementChange(`achievements_${semKeySuffix}`, aIdx, 'organizer', e.target.value)}
+                                  placeholder="Penyelenggara..."
+                                  className="neu-field-slot col-span-2 px-2 py-1 text-xs"
+                                />
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+                      </MobileCard>
+                    </>
+                  );
+                })()}
 
                 {/* Kenaikan Kelas (Bila Semester Genap) */}
                 {mobileRaporSem === 'scores_x2' && (
@@ -2327,158 +2862,32 @@ export default function StudentShow({
                   </table>
                 </div>
 
-                {/* C. P5 (Foto 11) */}
-                <div className="mb-2">
-                  <div className="font-bold text-[10px] uppercase text-slate-900 mb-0.5">
-                    C. PROJEK PENGUATAN PROFIL PELAJAR PANCASILA (P5)
-                  </div>
-                  <div className="text-[8.5px] mb-1 text-slate-800 flex flex-wrap gap-x-3">
-                    {isSampleStudent ? (
-                      <>
-                        <span><strong>Tema 1:</strong> Pembuatan Pupuk Organik (Eco enzym)</span>
-                        <span><strong>Tema 2:</strong> Senam pagi setiap hari jum'at</span>
-                        <span><strong>Tema 3:</strong> Kunjungan industri ke PT. Braja Mitra Nusantara</span>
-                      </>
-                    ) : (
-                      <span className="text-slate-500 italic">- Belum ada tema P5 -</span>
-                    )}
-                  </div>
-                  <table className="w-full border border-slate-900 text-[8.5px] border-collapse">
-                    <thead>
-                      <tr className="border-b border-slate-900 bg-slate-100 font-bold text-center">
-                        <th className="border-r border-slate-900 p-0.5 w-6">No.</th>
-                        <th className="border-r border-slate-900 p-0.5 w-44 text-left">Dimensi</th>
-                        <th className="border-r border-slate-900 p-0.5 w-32 text-left">Elemen</th>
-                        <th className="border-r border-slate-900 p-0.5 text-left">Sub-Elemen</th>
-                        <th className="p-0.5 w-32">Target Fase/Pencapaian</th>
-                      </tr>
-                    </thead>
-                    <tbody className="divide-y divide-slate-900">
-                      {isSampleStudent ? (
-                        <>
-                          <tr>
-                            <td className="border-r border-slate-900 p-0.5 text-center">1.</td>
-                            <td className="border-r border-slate-900 p-0.5 font-medium">Beriman, Bertakwa kepada Tuhan YME...</td>
-                            <td className="border-r border-slate-900 p-0.5">Akhlak kepada alam</td>
-                            <td className="border-r border-slate-900 p-0.5">Mewujudkan dan membangun kesadaran peduli lingkungan</td>
-                            <td className="p-0.5 text-center font-semibold">Mulai berkembang</td>
-                          </tr>
-                          <tr>
-                            <td className="border-r border-slate-900 p-0.5 text-center">2.</td>
-                            <td className="border-r border-slate-900 p-0.5 font-medium">Berkebhinekaan Global</td>
-                            <td className="border-r border-slate-900 p-0.5">-</td>
-                            <td className="border-r border-slate-900 p-0.5">-</td>
-                            <td className="p-0.5 text-center">-</td>
-                          </tr>
-                          <tr>
-                            <td className="border-r border-slate-900 p-0.5 text-center">3.</td>
-                            <td className="border-r border-slate-900 p-0.5 font-medium">Bergotong Royong</td>
-                            <td className="border-r border-slate-900 p-0.5">Kolaborasi</td>
-                            <td className="border-r border-slate-900 p-0.5">Bersinergi untuk kebaikan</td>
-                            <td className="p-0.5 text-center font-semibold">Mulai berkembang</td>
-                          </tr>
-                          <tr>
-                            <td className="border-r border-slate-900 p-0.5 text-center">4.</td>
-                            <td className="border-r border-slate-900 p-0.5 font-medium">Mandiri</td>
-                            <td className="border-r border-slate-900 p-0.5">-</td>
-                            <td className="border-r border-slate-900 p-0.5">-</td>
-                            <td className="p-0.5 text-center">-</td>
-                          </tr>
-                          <tr>
-                            <td className="border-r border-slate-900 p-0.5 text-center">5.</td>
-                            <td className="border-r border-slate-900 p-0.5 font-medium">Bernalar Kritis</td>
-                            <td className="border-r border-slate-900 p-0.5">-</td>
-                            <td className="border-r border-slate-900 p-0.5">-</td>
-                            <td className="p-0.5 text-center">-</td>
-                          </tr>
-                          <tr>
-                            <td className="border-r border-slate-900 p-0.5 text-center">6.</td>
-                            <td className="border-r border-slate-900 p-0.5 font-medium">Kreatif</td>
-                            <td className="border-r border-slate-900 p-0.5">Keluwesan berpikir</td>
-                            <td className="border-r border-slate-900 p-0.5">Bereksperimen secara kreatif</td>
-                            <td className="p-0.5 text-center font-semibold">Mulai berkembang</td>
-                          </tr>
-                        </>
-                      ) : (
-                        <tr>
-                          <td colSpan={5} className="p-2 text-center text-slate-500 italic">- Belum ada catatan penilaian P5 -</td>
-                        </tr>
-                      )}
-                    </tbody>
-                  </table>
-                </div>
+                {/* C. P5 */}
+                <PaperP5Section
+                  theme1={data.p5_theme_1_x1}
+                  theme2={data.p5_theme_2_x1}
+                  theme3={data.p5_theme_3_x1}
+                  onTheme1Change={(v) => setData('p5_theme_1_x1', v)}
+                  onTheme2Change={(v) => setData('p5_theme_2_x1', v)}
+                  onTheme3Change={(v) => setData('p5_theme_3_x1', v)}
+                  dimensions={data.p5_dimensions_x1}
+                  onDimChange={(idx, f, v) => handleP5DimChange('p5_dimensions_x1', idx, f, v)}
+                />
 
-                {/* D. EKSTRAKURIKULER (Foto 11) */}
-                <div>
-                  <div className="font-bold text-[10px] uppercase text-slate-900 mb-0.5">D. EKSTRAKURIKULER</div>
-                  <table className="w-full border border-slate-900 text-[9px] border-collapse">
-                    <thead>
-                      <tr className="border-b border-slate-900 bg-slate-100 font-bold text-center">
-                        <th className="border-r border-slate-900 p-0.5 w-8">No.</th>
-                        <th className="border-r border-slate-900 p-0.5 w-64 text-left">Ekstrakurikuler</th>
-                        <th className="p-0.5 text-left">Keterangan</th>
-                      </tr>
-                    </thead>
-                    <tbody className="divide-y divide-slate-900">
-                      {isSampleStudent ? (
-                        <>
-                          <tr>
-                            <td className="border-r border-slate-900 p-0.5 text-center">1.</td>
-                            <td className="border-r border-slate-900 p-0.5 font-medium">Praja Muda Karana (Pramuka)</td>
-                            <td className="p-0.5">Aktif dalam kegiatan kepramukaan sekolah</td>
-                          </tr>
-                          <tr>
-                            <td className="border-r border-slate-900 p-0.5 text-center">2.</td>
-                            <td className="border-r border-slate-900 p-0.5 font-medium">PMR (Palang Merah Remaja)</td>
-                            <td className="p-0.5">Melaksanakan kegiatan PMR dengan sangat baik</td>
-                          </tr>
-                        </>
-                      ) : (
-                        <tr>
-                          <td colSpan={3} className="p-2 text-center text-slate-500 italic">- Belum ada catatan kegiatan ekstrakurikuler -</td>
-                        </tr>
-                      )}
-                    </tbody>
-                  </table>
-                </div>
+                {/* D. EKSTRAKURIKULER */}
+                <PaperExtraSection
+                  extras={data.extras_x1}
+                  onExtraChange={(idx, f, v) => handleExtraChange('extras_x1', idx, f, v)}
+                />
               </div>
 
               {/* HALAMAN BELAKANG X1 (Foto 5 Asli) */}
               <div className="max-w-[210mm] mx-auto bg-white p-7 border border-slate-900 shadow-xs min-h-[297mm]">
                 {/* E. PRESTASI */}
-                <div className="mb-4">
-                  <div className="font-bold text-[10.5px] uppercase text-slate-900 mb-1">E. PRESTASI</div>
-                  <table className="w-full border border-slate-900 text-[9.5px] border-collapse text-center">
-                    <thead>
-                      <tr className="border-b border-slate-900 bg-slate-100 font-bold">
-                        <th className="border-r border-slate-900 p-1 w-28">Jenis Prestasi</th>
-                        <th className="border-r border-slate-900 p-1 w-28">Tingkat Prestasi</th>
-                        <th className="border-r border-slate-900 p-1">Nama Prestasi</th>
-                        <th className="border-r border-slate-900 p-1 w-20">Tahun Prestasi</th>
-                        <th className="border-r border-slate-900 p-1 w-32">Penyelenggara</th>
-                        <th className="p-1 w-24">Peringkat</th>
-                      </tr>
-                    </thead>
-                    <tbody className="divide-y divide-slate-900">
-                      <tr>
-                        <td className="border-r border-slate-900 p-2">-</td>
-                        <td className="border-r border-slate-900 p-2">-</td>
-                        <td className="border-r border-slate-900 p-2">-</td>
-                        <td className="border-r border-slate-900 p-2 font-mono">-</td>
-                        <td className="border-r border-slate-900 p-2">-</td>
-                        <td className="p-2">-</td>
-                      </tr>
-                      <tr>
-                        <td className="border-r border-slate-900 p-2">-</td>
-                        <td className="border-r border-slate-900 p-2">-</td>
-                        <td className="border-r border-slate-900 p-2">-</td>
-                        <td className="border-r border-slate-900 p-2 font-mono">-</td>
-                        <td className="border-r border-slate-900 p-2">-</td>
-                        <td className="p-2">-</td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
+                <PaperAchievementSection
+                  achievements={data.achievements_x1}
+                  onAchChange={(idx, f, v) => handleAchievementChange('achievements_x1', idx, f, v)}
+                />
 
                 {/* F. KETIDAKHADIRAN & TANDA TANGAN */}
                 <div className="mb-6">
@@ -2753,150 +3162,32 @@ export default function StudentShow({
                   </table>
                 </div>
 
-                {/* C. P5 X2 */}
-                <div className="mb-2">
-                  <div className="font-bold text-[10px] uppercase text-slate-900 mb-0.5">
-                    C. PROJEK PENGUATAN PROFIL PELAJAR PANCASILA (P5)
-                  </div>
-                  <div className="text-[8.5px] mb-1 text-slate-800 flex flex-wrap gap-x-3">
-                    {isSampleStudent ? (
-                      <>
-                        <span><strong>Tema 1:</strong> Budaya Hidup Bersih & Sehat (K3LH)</span>
-                        <span><strong>Tema 2:</strong> Kebhinekaan Nusantara</span>
-                        <span><strong>Tema 3:</strong> Kewirausahaan Mandiri</span>
-                      </>
-                    ) : (
-                      <span className="text-slate-500 italic">- Belum ada tema P5 -</span>
-                    )}
-                  </div>
-                  <table className="w-full border border-slate-900 text-[8.5px] border-collapse">
-                    <thead>
-                      <tr className="border-b border-slate-900 bg-slate-100 font-bold text-center">
-                        <th className="border-r border-slate-900 p-0.5 w-6">No.</th>
-                        <th className="border-r border-slate-900 p-0.5 w-44 text-left">Dimensi</th>
-                        <th className="border-r border-slate-900 p-0.5 w-32 text-left">Elemen</th>
-                        <th className="border-r border-slate-900 p-0.5 text-left">Sub-Elemen</th>
-                        <th className="p-0.5 w-32">Target Fase/Pencapaian</th>
-                      </tr>
-                    </thead>
-                    <tbody className="divide-y divide-slate-900">
-                      {isSampleStudent ? (
-                        <>
-                          <tr>
-                            <td className="border-r border-slate-900 p-0.5 text-center">1.</td>
-                            <td className="border-r border-slate-900 p-0.5 font-medium">Beriman, Bertakwa kepada Tuhan YME...</td>
-                            <td className="border-r border-slate-900 p-0.5">Akhlak pribadi</td>
-                            <td className="border-r border-slate-900 p-0.5">Menjaga integritas dan kejujuran diri</td>
-                            <td className="p-0.5 text-center font-semibold">Berkembang Sesuai Harapan</td>
-                          </tr>
-                          <tr>
-                            <td className="border-r border-slate-900 p-0.5 text-center">2.</td>
-                            <td className="border-r border-slate-900 p-0.5 font-medium">Berkebhinekaan Global</td>
-                            <td className="border-r border-slate-900 p-0.5">Mengenal budaya</td>
-                            <td className="border-r border-slate-900 p-0.5">Memahami toleransi keberagaman suku</td>
-                            <td className="p-0.5 text-center font-semibold">Berkembang Sesuai Harapan</td>
-                          </tr>
-                          <tr>
-                            <td className="border-r border-slate-900 p-0.5 text-center">3.</td>
-                            <td className="border-r border-slate-900 p-0.5 font-medium">Bergotong Royong</td>
-                            <td className="border-r border-slate-900 p-0.5">Kerjasama tim</td>
-                            <td className="border-r border-slate-900 p-0.5">Aktif berbagi tugas dan tolong menolong</td>
-                            <td className="p-0.5 text-center font-semibold">Berkembang Sesuai Harapan</td>
-                          </tr>
-                          <tr>
-                            <td className="border-r border-slate-900 p-0.5 text-center">4.</td>
-                            <td className="border-r border-slate-900 p-0.5 font-medium">Mandiri</td>
-                            <td className="border-r border-slate-900 p-0.5">Regulasi diri</td>
-                            <td className="border-r border-slate-900 p-0.5">Mengatur waktu belajar dan praktek coding</td>
-                            <td className="p-0.5 text-center font-semibold">Berkembang Sesuai Harapan</td>
-                          </tr>
-                          <tr>
-                            <td className="border-r border-slate-900 p-0.5 text-center">5.</td>
-                            <td className="border-r border-slate-900 p-0.5 font-medium">Bernalar Kritis</td>
-                            <td className="border-r border-slate-900 p-0.5">Memproses ide</td>
-                            <td className="border-r border-slate-900 p-0.5">Menjelaskan argumen logis algoritma</td>
-                            <td className="p-0.5 text-center font-semibold">Berkembang Sesuai Harapan</td>
-                          </tr>
-                          <tr>
-                            <td className="border-r border-slate-900 p-0.5 text-center">6.</td>
-                            <td className="border-r border-slate-900 p-0.5 font-medium">Kreatif</td>
-                            <td className="border-r border-slate-900 p-0.5">Karya mandiri</td>
-                            <td className="border-r border-slate-900 p-0.5">Menghasilkan karya media interaktif</td>
-                            <td className="p-0.5 text-center font-semibold">Berkembang Sesuai Harapan</td>
-                          </tr>
-                        </>
-                      ) : (
-                        <tr>
-                          <td colSpan={5} className="p-2 text-center text-slate-500 italic">- Belum ada catatan penilaian P5 -</td>
-                        </tr>
-                      )}
-                    </tbody>
-                  </table>
-                </div>
+                {/* C. P5 */}
+                <PaperP5Section
+                  theme1={data.p5_theme_1_x2}
+                  theme2={data.p5_theme_2_x2}
+                  theme3={data.p5_theme_3_x2}
+                  onTheme1Change={(v) => setData('p5_theme_1_x2', v)}
+                  onTheme2Change={(v) => setData('p5_theme_2_x2', v)}
+                  onTheme3Change={(v) => setData('p5_theme_3_x2', v)}
+                  dimensions={data.p5_dimensions_x2}
+                  onDimChange={(idx, f, v) => handleP5DimChange('p5_dimensions_x2', idx, f, v)}
+                />
 
-                {/* D. EKSTRAKURIKULER X2 */}
-                <div>
-                  <div className="font-bold text-[10px] uppercase text-slate-900 mb-0.5">D. EKSTRAKURIKULER</div>
-                  <table className="w-full border border-slate-900 text-[9px] border-collapse">
-                    <thead>
-                      <tr className="border-b border-slate-900 bg-slate-100 font-bold text-center">
-                        <th className="border-r border-slate-900 p-0.5 w-8">No.</th>
-                        <th className="border-r border-slate-900 p-0.5 w-64 text-left">Ekstrakurikuler</th>
-                        <th className="p-0.5 text-left">Keterangan</th>
-                      </tr>
-                    </thead>
-                    <tbody className="divide-y divide-slate-900">
-                      {isSampleStudent ? (
-                        <>
-                          <tr>
-                            <td className="border-r border-slate-900 p-0.5 text-center">1.</td>
-                            <td className="border-r border-slate-900 p-0.5 font-medium">Praja Muda Karana (Pramuka)</td>
-                            <td className="p-0.5">Aktif dan berdisiplin tinggi</td>
-                          </tr>
-                          <tr>
-                            <td className="border-r border-slate-900 p-0.5 text-center">2.</td>
-                            <td className="border-r border-slate-900 p-0.5 font-medium">PMR (Palang Merah Remaja)</td>
-                            <td className="p-0.5">Melaksanakan kegiatan PMR dengan sangat baik</td>
-                          </tr>
-                        </>
-                      ) : (
-                        <tr>
-                          <td colSpan={3} className="p-2 text-center text-slate-500 italic">- Belum ada catatan kegiatan ekstrakurikuler -</td>
-                        </tr>
-                      )}
-                    </tbody>
-                  </table>
-                </div>
+                {/* D. EKSTRAKURIKULER */}
+                <PaperExtraSection
+                  extras={data.extras_x2}
+                  onExtraChange={(idx, f, v) => handleExtraChange('extras_x2', idx, f, v)}
+                />
               </div>
 
               {/* HALAMAN BELAKANG X2 (Foto 13 Asli - Kenaikan Kelas) */}
               <div className="max-w-[210mm] mx-auto bg-white p-7 border border-slate-900 shadow-xs min-h-[297mm]">
                 {/* E. PRESTASI */}
-                <div className="mb-4">
-                  <div className="font-bold text-[10.5px] uppercase text-slate-900 mb-1">E. PRESTASI</div>
-                  <table className="w-full border border-slate-900 text-[9.5px] border-collapse text-center">
-                    <thead>
-                      <tr className="border-b border-slate-900 bg-slate-100 font-bold">
-                        <th className="border-r border-slate-900 p-1 w-28">Jenis Prestasi</th>
-                        <th className="border-r border-slate-900 p-1 w-28">Tingkat Prestasi</th>
-                        <th className="border-r border-slate-900 p-1">Nama Prestasi</th>
-                        <th className="border-r border-slate-900 p-1 w-20">Tahun Prestasi</th>
-                        <th className="border-r border-slate-900 p-1 w-32">Penyelenggara</th>
-                        <th className="p-1 w-24">Peringkat</th>
-                      </tr>
-                    </thead>
-                    <tbody className="divide-y divide-slate-900">
-                      <tr>
-                        <td className="border-r border-slate-900 p-2">-</td>
-                        <td className="border-r border-slate-900 p-2">-</td>
-                        <td className="border-r border-slate-900 p-2">-</td>
-                        <td className="border-r border-slate-900 p-2 font-mono">-</td>
-                        <td className="border-r border-slate-900 p-2">-</td>
-                        <td className="p-2">-</td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
+                <PaperAchievementSection
+                  achievements={data.achievements_x2}
+                  onAchChange={(idx, f, v) => handleAchievementChange('achievements_x2', idx, f, v)}
+                />
 
                 {/* F. KETIDAKHADIRAN & KEPUTUSAN KENAIKAN (FOTO 13) */}
                 <div className="mb-6">
@@ -3192,150 +3483,32 @@ export default function StudentShow({
                   </table>
                 </div>
 
-                {/* C. P5 XI1 (Foto 6 Asli) */}
-                <div className="mb-2">
-                  <div className="font-bold text-[10px] uppercase text-slate-900 mb-0.5">
-                    C. PROJEK PENGUATAN PROFIL PELAJAR PANCASILA (P5)
-                  </div>
-                  <div className="text-[8.5px] mb-1 text-slate-800 flex flex-wrap gap-x-3">
-                    {isSampleStudent ? (
-                      <>
-                        <span><strong>Tema 1:</strong> Sehat Jasmani</span>
-                        <span><strong>Tema 2:</strong> Siap Bekerja</span>
-                        <span><strong>Tema 3:</strong> Siap Berkarya</span>
-                      </>
-                    ) : (
-                      <span className="text-slate-500 italic">- Belum ada tema P5 -</span>
-                    )}
-                  </div>
-                  <table className="w-full border border-slate-900 text-[8.5px] border-collapse">
-                    <thead>
-                      <tr className="border-b border-slate-900 bg-slate-100 font-bold text-center">
-                        <th className="border-r border-slate-900 p-0.5 w-6">No.</th>
-                        <th className="border-r border-slate-900 p-0.5 w-44 text-left">Dimensi</th>
-                        <th className="border-r border-slate-900 p-0.5 w-32 text-left">Elemen</th>
-                        <th className="border-r border-slate-900 p-0.5 text-left">Sub-Elemen</th>
-                        <th className="p-0.5 w-32">Target Fase/Pencapaian</th>
-                      </tr>
-                    </thead>
-                    <tbody className="divide-y divide-slate-900">
-                      {isSampleStudent ? (
-                        <>
-                          <tr>
-                            <td className="border-r border-slate-900 p-0.5 text-center">1.</td>
-                            <td className="border-r border-slate-900 p-0.5 font-medium">Beriman, Bertakwa kepada Tuhan YME...</td>
-                            <td className="border-r border-slate-900 p-0.5">Akhlak kepada Manusia</td>
-                            <td className="border-r border-slate-900 p-0.5">Melakukan perbuatan baik kepada orang lain</td>
-                            <td className="p-0.5 text-center font-semibold">Berkembang Sesuai Harapan</td>
-                          </tr>
-                          <tr>
-                            <td className="border-r border-slate-900 p-0.5 text-center">2.</td>
-                            <td className="border-r border-slate-900 p-0.5 font-medium">Berkebhinekaan Global</td>
-                            <td className="border-r border-slate-900 p-0.5">-</td>
-                            <td className="border-r border-slate-900 p-0.5">-</td>
-                            <td className="p-0.5 text-center">-</td>
-                          </tr>
-                          <tr>
-                            <td className="border-r border-slate-900 p-0.5 text-center">3.</td>
-                            <td className="border-r border-slate-900 p-0.5 font-medium">Bergotong Royong</td>
-                            <td className="border-r border-slate-900 p-0.5">Kolaborasi</td>
-                            <td className="border-r border-slate-900 p-0.5">Menjalin kerjasama bersinergi</td>
-                            <td className="p-0.5 text-center font-semibold">Sedang Berkembang</td>
-                          </tr>
-                          <tr>
-                            <td className="border-r border-slate-900 p-0.5 text-center">4.</td>
-                            <td className="border-r border-slate-900 p-0.5 font-medium">Mandiri</td>
-                            <td className="border-r border-slate-900 p-0.5">-</td>
-                            <td className="border-r border-slate-900 p-0.5">-</td>
-                            <td className="p-0.5 text-center">-</td>
-                          </tr>
-                          <tr>
-                            <td className="border-r border-slate-900 p-0.5 text-center">5.</td>
-                            <td className="border-r border-slate-900 p-0.5 font-medium">Bernalar Kritis</td>
-                            <td className="border-r border-slate-900 p-0.5">-</td>
-                            <td className="border-r border-slate-900 p-0.5">-</td>
-                            <td className="p-0.5 text-center">-</td>
-                          </tr>
-                          <tr>
-                            <td className="border-r border-slate-900 p-0.5 text-center">6.</td>
-                            <td className="border-r border-slate-900 p-0.5 font-medium">Kreatif</td>
-                            <td className="border-r border-slate-900 p-0.5">Menghasilkan gagasan orisinil</td>
-                            <td className="border-r border-slate-900 p-0.5">Melahirkan gagasan berdasar pemikiran sendiri</td>
-                            <td className="p-0.5 text-center font-semibold">Sedang Berkembang</td>
-                          </tr>
-                        </>
-                      ) : (
-                        <tr>
-                          <td colSpan={5} className="p-2 text-center text-slate-500 italic">- Belum ada catatan penilaian P5 -</td>
-                        </tr>
-                      )}
-                    </tbody>
-                  </table>
-                </div>
+                {/* C. P5 */}
+                <PaperP5Section
+                  theme1={data.p5_theme_1_xi1}
+                  theme2={data.p5_theme_2_xi1}
+                  theme3={data.p5_theme_3_xi1}
+                  onTheme1Change={(v) => setData('p5_theme_1_xi1', v)}
+                  onTheme2Change={(v) => setData('p5_theme_2_xi1', v)}
+                  onTheme3Change={(v) => setData('p5_theme_3_xi1', v)}
+                  dimensions={data.p5_dimensions_xi1}
+                  onDimChange={(idx, f, v) => handleP5DimChange('p5_dimensions_xi1', idx, f, v)}
+                />
 
-                {/* D. EKSTRAKURIKULER XI1 (Foto 6) */}
-                <div>
-                  <div className="font-bold text-[10px] uppercase text-slate-900 mb-0.5">D. EKSTRAKURIKULER</div>
-                  <table className="w-full border border-slate-900 text-[9px] border-collapse">
-                    <thead>
-                      <tr className="border-b border-slate-900 bg-slate-100 font-bold text-center">
-                        <th className="border-r border-slate-900 p-0.5 w-8">No.</th>
-                        <th className="border-r border-slate-900 p-0.5 w-64 text-left">Ekstrakurikuler</th>
-                        <th className="p-0.5 text-left">Keterangan</th>
-                      </tr>
-                    </thead>
-                    <tbody className="divide-y divide-slate-900">
-                      {isSampleStudent ? (
-                        <>
-                          <tr>
-                            <td className="border-r border-slate-900 p-0.5 text-center">1.</td>
-                            <td className="border-r border-slate-900 p-0.5 font-medium">Praja Muda Karana (Pramuka)</td>
-                            <td className="p-0.5">Aktif dan bertanggung jawab</td>
-                          </tr>
-                          <tr>
-                            <td className="border-r border-slate-900 p-0.5 text-center">2.</td>
-                            <td className="border-r border-slate-900 p-0.5 font-medium">PMR (Palang Merah Remaja)</td>
-                            <td className="p-0.5">Melaksanakan kegiatan PMR dengan sangat baik</td>
-                          </tr>
-                        </>
-                      ) : (
-                        <tr>
-                          <td colSpan={3} className="p-2 text-center text-slate-500 italic">- Belum ada kegiatan ekstrakurikuler -</td>
-                        </tr>
-                      )}
-                    </tbody>
-                  </table>
-                </div>
+                {/* D. EKSTRAKURIKULER */}
+                <PaperExtraSection
+                  extras={data.extras_xi1}
+                  onExtraChange={(idx, f, v) => handleExtraChange('extras_xi1', idx, f, v)}
+                />
               </div>
 
               {/* HALAMAN BELAKANG XI1 (Foto 9 Asli) */}
               <div className="max-w-[210mm] mx-auto bg-white p-7 border border-slate-900 shadow-xs min-h-[297mm]">
                 {/* E. PRESTASI */}
-                <div className="mb-4">
-                  <div className="font-bold text-[10.5px] uppercase text-slate-900 mb-1">E. PRESTASI</div>
-                  <table className="w-full border border-slate-900 text-[9.5px] border-collapse text-center">
-                    <thead>
-                      <tr className="border-b border-slate-900 bg-slate-100 font-bold">
-                        <th className="border-r border-slate-900 p-1 w-28">Jenis Prestasi</th>
-                        <th className="border-r border-slate-900 p-1 w-28">Tingkat Prestasi</th>
-                        <th className="border-r border-slate-900 p-1">Nama Prestasi</th>
-                        <th className="border-r border-slate-900 p-1 w-20">Tahun Prestasi</th>
-                        <th className="border-r border-slate-900 p-1 w-32">Penyelenggara</th>
-                        <th className="p-1 w-24">Peringkat</th>
-                      </tr>
-                    </thead>
-                    <tbody className="divide-y divide-slate-900">
-                      <tr>
-                        <td className="border-r border-slate-900 p-2">-</td>
-                        <td className="border-r border-slate-900 p-2">-</td>
-                        <td className="border-r border-slate-900 p-2">-</td>
-                        <td className="border-r border-slate-900 p-2 font-mono">-</td>
-                        <td className="border-r border-slate-900 p-2">-</td>
-                        <td className="p-2">-</td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
+                <PaperAchievementSection
+                  achievements={data.achievements_xi1}
+                  onAchChange={(idx, f, v) => handleAchievementChange('achievements_xi1', idx, f, v)}
+                />
 
                 {/* F. KETIDAKHADIRAN & TTD (Foto 9 Asli: Tanpa Keterangan 1 Hari) */}
                 <div className="mb-6">
@@ -3609,149 +3782,32 @@ export default function StudentShow({
                   </table>
                 </div>
 
-                {/* C. P5 XI2 (Foto 10 Asli) */}
-                <div className="mb-2">
-                  <div className="font-bold text-[10px] uppercase text-slate-900 mb-0.5">
-                    C. PROJEK PENGUATAN PROFIL PELAJAR PANCASILA (P5)
-                  </div>
-                  <div className="text-[8.5px] mb-1 text-slate-800 flex flex-wrap gap-x-3">
-                    {isSampleStudent ? (
-                      <>
-                        <span><strong>Tema 1:</strong> Festival Makanan Tradisional</span>
-                        <span><strong>Tema 2:</strong> Menulis dan memproduksi Iklan Prospektif Impian</span>
-                      </>
-                    ) : (
-                      <span className="text-slate-500 italic">- Belum ada tema P5 -</span>
-                    )}
-                  </div>
-                  <table className="w-full border border-slate-900 text-[8.5px] border-collapse">
-                    <thead>
-                      <tr className="border-b border-slate-900 bg-slate-100 font-bold text-center">
-                        <th className="border-r border-slate-900 p-0.5 w-6">No.</th>
-                        <th className="border-r border-slate-900 p-0.5 w-44 text-left">Dimensi</th>
-                        <th className="border-r border-slate-900 p-0.5 w-32 text-left">Elemen</th>
-                        <th className="border-r border-slate-900 p-0.5 text-left">Sub-Elemen</th>
-                        <th className="p-0.5 w-32">Target Fase/Pencapaian</th>
-                      </tr>
-                    </thead>
-                    <tbody className="divide-y divide-slate-900">
-                      {isSampleStudent ? (
-                        <>
-                          <tr>
-                            <td className="border-r border-slate-900 p-0.5 text-center">1.</td>
-                            <td className="border-r border-slate-900 p-0.5 font-medium">Beriman, Bertakwa kepada Tuhan YME...</td>
-                            <td className="border-r border-slate-900 p-0.5">Akhlak kepada Manusia</td>
-                            <td className="border-r border-slate-900 p-0.5">Melakukan perbuatan baik kepada orang lain</td>
-                            <td className="p-0.5 text-center font-semibold">Berkembang Sesuai Harapan</td>
-                          </tr>
-                          <tr>
-                            <td className="border-r border-slate-900 p-0.5 text-center">2.</td>
-                            <td className="border-r border-slate-900 p-0.5 font-medium">Berkebhinekaan Global</td>
-                            <td className="border-r border-slate-900 p-0.5">Berkeadilan sosial</td>
-                            <td className="border-r border-slate-900 p-0.5">Memahami konsep hak dan kewajiban</td>
-                            <td className="p-0.5 text-center font-semibold">Berkembang Sesuai Harapan</td>
-                          </tr>
-                          <tr>
-                            <td className="border-r border-slate-900 p-0.5 text-center">3.</td>
-                            <td className="border-r border-slate-900 p-0.5 font-medium">Bergotong Royong</td>
-                            <td className="border-r border-slate-900 p-0.5">Berkolaborasi</td>
-                            <td className="border-r border-slate-900 p-0.5">Menyelaraskan kapasitas kelompok</td>
-                            <td className="p-0.5 text-center font-semibold">Berkembang Sesuai Harapan</td>
-                          </tr>
-                          <tr>
-                            <td className="border-r border-slate-900 p-0.5 text-center">4.</td>
-                            <td className="border-r border-slate-900 p-0.5 font-medium">Mandiri</td>
-                            <td className="border-r border-slate-900 p-0.5">Memahami situasi dan diri</td>
-                            <td className="border-r border-slate-900 p-0.5">Mempunyai kemampuan dan membuka diri</td>
-                            <td className="p-0.5 text-center font-semibold">Sangat Berkembang</td>
-                          </tr>
-                          <tr>
-                            <td className="border-r border-slate-900 p-0.5 text-center">5.</td>
-                            <td className="border-r border-slate-900 p-0.5 font-medium">Bernalar Kritis</td>
-                            <td className="border-r border-slate-900 p-0.5">Memproses informasi</td>
-                            <td className="border-r border-slate-900 p-0.5">Mengajukan pertanyaan</td>
-                            <td className="p-0.5 text-center font-semibold">Sangat Berkembang</td>
-                          </tr>
-                          <tr>
-                            <td className="border-r border-slate-900 p-0.5 text-center">6.</td>
-                            <td className="border-r border-slate-900 p-0.5 font-medium">Kreatif</td>
-                            <td className="border-r border-slate-900 p-0.5">Menghasilkan karya</td>
-                            <td className="border-r border-slate-900 p-0.5">Merealisasikan prototipe aplikasi mobile</td>
-                            <td className="p-0.5 text-center font-semibold">Sangat Berkembang</td>
-                          </tr>
-                        </>
-                      ) : (
-                        <tr>
-                          <td colSpan={5} className="p-2 text-center text-slate-500 italic">- Belum ada catatan penilaian P5 -</td>
-                        </tr>
-                      )}
-                    </tbody>
-                  </table>
-                </div>
+                {/* C. P5 */}
+                <PaperP5Section
+                  theme1={data.p5_theme_1_xi2}
+                  theme2={data.p5_theme_2_xi2}
+                  theme3={data.p5_theme_3_xi2}
+                  onTheme1Change={(v) => setData('p5_theme_1_xi2', v)}
+                  onTheme2Change={(v) => setData('p5_theme_2_xi2', v)}
+                  onTheme3Change={(v) => setData('p5_theme_3_xi2', v)}
+                  dimensions={data.p5_dimensions_xi2}
+                  onDimChange={(idx, f, v) => handleP5DimChange('p5_dimensions_xi2', idx, f, v)}
+                />
 
-                {/* D. EKSTRAKURIKULER XI2 (Foto 10) */}
-                <div>
-                  <div className="font-bold text-[10px] uppercase text-slate-900 mb-0.5">D. EKSTRAKURIKULER</div>
-                  <table className="w-full border border-slate-900 text-[9px] border-collapse">
-                    <thead>
-                      <tr className="border-b border-slate-900 bg-slate-100 font-bold text-center">
-                        <th className="border-r border-slate-900 p-0.5 w-8">No.</th>
-                        <th className="border-r border-slate-900 p-0.5 w-64 text-left">Ekstrakurikuler</th>
-                        <th className="p-0.5 text-left">Keterangan</th>
-                      </tr>
-                    </thead>
-                    <tbody className="divide-y divide-slate-900">
-                      {isSampleStudent ? (
-                        <>
-                          <tr>
-                            <td className="border-r border-slate-900 p-0.5 text-center">1.</td>
-                            <td className="border-r border-slate-900 p-0.5 font-medium">Praja Muda Karana (Pramuka)</td>
-                            <td className="p-0.5">Penegak Bantara / Aktif</td>
-                          </tr>
-                          <tr>
-                            <td className="border-r border-slate-900 p-0.5 text-center">2.</td>
-                            <td className="border-r border-slate-900 p-0.5 font-medium">PMR (Palang Merah Remaja)</td>
-                            <td className="p-0.5">Melaksanakan kegiatan PMR dengan sangat baik</td>
-                          </tr>
-                        </>
-                      ) : (
-                        <tr>
-                          <td colSpan={3} className="p-2 text-center text-slate-500 italic">- Belum ada kegiatan ekstrakurikuler -</td>
-                        </tr>
-                      )}
-                    </tbody>
-                  </table>
-                </div>
+                {/* D. EKSTRAKURIKULER */}
+                <PaperExtraSection
+                  extras={data.extras_xi2}
+                  onExtraChange={(idx, f, v) => handleExtraChange('extras_xi2', idx, f, v)}
+                />
               </div>
 
               {/* HALAMAN BELAKANG XI2 (Foto 8 Asli - Kenaikan Kelas) */}
               <div className="max-w-[210mm] mx-auto bg-white p-7 border border-slate-900 shadow-xs min-h-[297mm]">
                 {/* E. PRESTASI */}
-                <div className="mb-4">
-                  <div className="font-bold text-[10.5px] uppercase text-slate-900 mb-1">E. PRESTASI</div>
-                  <table className="w-full border border-slate-900 text-[9.5px] border-collapse text-center">
-                    <thead>
-                      <tr className="border-b border-slate-900 bg-slate-100 font-bold">
-                        <th className="border-r border-slate-900 p-1 w-28">Jenis Prestasi</th>
-                        <th className="border-r border-slate-900 p-1 w-28">Tingkat Prestasi</th>
-                        <th className="border-r border-slate-900 p-1">Nama Prestasi</th>
-                        <th className="border-r border-slate-900 p-1 w-20">Tahun Prestasi</th>
-                        <th className="border-r border-slate-900 p-1 w-32">Penyelenggara</th>
-                        <th className="p-1 w-24">Peringkat</th>
-                      </tr>
-                    </thead>
-                    <tbody className="divide-y divide-slate-900">
-                      <tr>
-                        <td className="border-r border-slate-900 p-2">-</td>
-                        <td className="border-r border-slate-900 p-2">-</td>
-                        <td className="border-r border-slate-900 p-2">-</td>
-                        <td className="border-r border-slate-900 p-2 font-mono">-</td>
-                        <td className="border-r border-slate-900 p-2">-</td>
-                        <td className="p-2">-</td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
+                <PaperAchievementSection
+                  achievements={data.achievements_xi2}
+                  onAchChange={(idx, f, v) => handleAchievementChange('achievements_xi2', idx, f, v)}
+                />
 
                 {/* F. KETIDAKHADIRAN & KEPUTUSAN KENAIKAN (FOTO 8) */}
                 <div className="mb-6">
@@ -4047,143 +4103,32 @@ export default function StudentShow({
                   </table>
                 </div>
 
-                {/* C. P5 XII1 */}
-                <div className="mb-2">
-                  <div className="font-bold text-[10px] uppercase text-slate-900 mb-0.5">
-                    C. PROJEK PENGUATAN PROFIL PELAJAR PANCASILA (P5)
-                  </div>
-                  <div className="text-[8.5px] mb-1 text-slate-800 flex flex-wrap gap-x-3">
-                    {isSampleStudent ? (
-                      <>
-                        <span><strong>Tema 1:</strong> Rekayasa dan Teknologi Kejuruan</span>
-                        <span><strong>Tema 2:</strong> Kebekerjaan Budaya Kerja 5R</span>
-                        <span><strong>Tema 3:</strong> Gaya Hidup Berkelanjutan</span>
-                      </>
-                    ) : (
-                      <span className="text-slate-500 italic">- Belum ada tema P5 -</span>
-                    )}
-                  </div>
-                  <table className="w-full border border-slate-900 text-[8.5px] border-collapse">
-                    <thead>
-                      <tr className="border-b border-slate-900 bg-slate-100 font-bold text-center">
-                        <th className="border-r border-slate-900 p-0.5 w-6">No.</th>
-                        <th className="border-r border-slate-900 p-0.5 w-44 text-left">Dimensi</th>
-                        <th className="border-r border-slate-900 p-0.5 w-32 text-left">Elemen</th>
-                        <th className="border-r border-slate-900 p-0.5 text-left">Sub-Elemen</th>
-                        <th className="p-0.5 w-32">Target Fase/Pencapaian</th>
-                      </tr>
-                    </thead>
-                    <tbody className="divide-y divide-slate-900">
-                      {isSampleStudent ? (
-                        <>
-                          <tr>
-                            <td className="border-r border-slate-900 p-0.5 text-center">1.</td>
-                            <td className="border-r border-slate-900 p-0.5 font-medium">Beriman, Bertakwa kepada Tuhan YME...</td>
-                            <td className="border-r border-slate-900 p-0.5">Akhlak bernegara</td>
-                            <td className="border-r border-slate-900 p-0.5">Mendukung etika profesi IT dan legalitas HAKI</td>
-                            <td className="p-0.5 text-center font-semibold">Sangat Berkembang</td>
-                          </tr>
-                          <tr>
-                            <td className="border-r border-slate-900 p-0.5 text-center">2.</td>
-                            <td className="border-r border-slate-900 p-0.5 font-medium">Berkebhinekaan Global</td>
-                            <td className="border-r border-slate-900 p-0.5">Komunikasi global</td>
-                            <td className="border-r border-slate-900 p-0.5">Kerjasama dengan rekan industri multikultur</td>
-                            <td className="p-0.5 text-center font-semibold">Sangat Berkembang</td>
-                          </tr>
-                          <tr>
-                            <td className="border-r border-slate-900 p-0.5 text-center">3.</td>
-                            <td className="border-r border-slate-900 p-0.5 font-medium">Bergotong Royong</td>
-                            <td className="border-r border-slate-900 p-0.5">Kolaborasi tim</td>
-                            <td className="border-r border-slate-900 p-0.5">Berbagi tanggung jawab proyek industri</td>
-                            <td className="p-0.5 text-center font-semibold">Sangat Berkembang</td>
-                          </tr>
-                          <tr>
-                            <td className="border-r border-slate-900 p-0.5 text-center">4.</td>
-                            <td className="border-r border-slate-900 p-0.5 font-medium">Mandiri</td>
-                            <td className="border-r border-slate-900 p-0.5">Tanggung jawab kerja</td>
-                            <td className="border-r border-slate-900 p-0.5">Menuntaskan tugas PKL tanpa supervisi ketat</td>
-                            <td className="p-0.5 text-center font-semibold">Sangat Berkembang</td>
-                          </tr>
-                          <tr>
-                            <td className="border-r border-slate-900 p-0.5 text-center">5.</td>
-                            <td className="border-r border-slate-900 p-0.5 font-medium">Bernalar Kritis</td>
-                            <td className="border-r border-slate-900 p-0.5">Pemecahan masalah</td>
-                            <td className="border-r border-slate-900 p-0.5">Debugging dan arsitektur database</td>
-                            <td className="p-0.5 text-center font-semibold">Sangat Berkembang</td>
-                          </tr>
-                          <tr>
-                            <td className="border-r border-slate-900 p-0.5 text-center">6.</td>
-                            <td className="border-r border-slate-900 p-0.5 font-medium">Kreatif</td>
-                            <td className="border-r border-slate-900 p-0.5">Karya aplikatif</td>
-                            <td className="border-r border-slate-900 p-0.5">Merancang antarmuka sistem responsif</td>
-                            <td className="p-0.5 text-center font-semibold">Sangat Berkembang</td>
-                          </tr>
-                        </>
-                      ) : (
-                        <tr>
-                          <td colSpan={5} className="p-2 text-center text-slate-500 italic">- Belum ada catatan penilaian P5 -</td>
-                        </tr>
-                      )}
-                    </tbody>
-                  </table>
-                </div>
+                {/* C. P5 */}
+                <PaperP5Section
+                  theme1={data.p5_theme_1_xii1}
+                  theme2={data.p5_theme_2_xii1}
+                  theme3={data.p5_theme_3_xii1}
+                  onTheme1Change={(v) => setData('p5_theme_1_xii1', v)}
+                  onTheme2Change={(v) => setData('p5_theme_2_xii1', v)}
+                  onTheme3Change={(v) => setData('p5_theme_3_xii1', v)}
+                  dimensions={data.p5_dimensions_xii1}
+                  onDimChange={(idx, f, v) => handleP5DimChange('p5_dimensions_xii1', idx, f, v)}
+                />
 
-                {/* D. EKSTRAKURIKULER XII1 */}
-                <div>
-                  <div className="font-bold text-[10px] uppercase text-slate-900 mb-0.5">D. EKSTRAKURIKULER</div>
-                  <table className="w-full border border-slate-900 text-[9px] border-collapse">
-                    <thead>
-                      <tr className="border-b border-slate-900 bg-slate-100 font-bold text-center">
-                        <th className="border-r border-slate-900 p-0.5 w-8">No.</th>
-                        <th className="border-r border-slate-900 p-0.5 w-64 text-left">Ekstrakurikuler</th>
-                        <th className="p-0.5 text-left">Keterangan</th>
-                      </tr>
-                    </thead>
-                    <tbody className="divide-y divide-slate-900">
-                      {isSampleStudent ? (
-                        <tr>
-                          <td className="border-r border-slate-900 p-0.5 text-center">1.</td>
-                          <td className="border-r border-slate-900 p-0.5 font-medium">Praja Muda Karana (Pramuka)</td>
-                          <td className="p-0.5">Penegak / Berpartisipasi aktif</td>
-                        </tr>
-                      ) : (
-                        <tr>
-                          <td colSpan={3} className="p-2 text-center text-slate-500 italic">- Belum ada kegiatan ekstrakurikuler -</td>
-                        </tr>
-                      )}
-                    </tbody>
-                  </table>
-                </div>
+                {/* D. EKSTRAKURIKULER */}
+                <PaperExtraSection
+                  extras={data.extras_xii1}
+                  onExtraChange={(idx, f, v) => handleExtraChange('extras_xii1', idx, f, v)}
+                />
               </div>
 
               {/* HALAMAN BELAKANG XII1 (Foto 5 Asli: Kusniarti, S.Pd) */}
               <div className="max-w-[210mm] mx-auto bg-white p-7 border border-slate-900 shadow-xs min-h-[297mm]">
                 {/* E. PRESTASI */}
-                <div className="mb-4">
-                  <div className="font-bold text-[10.5px] uppercase text-slate-900 mb-1">E. PRESTASI</div>
-                  <table className="w-full border border-slate-900 text-[9.5px] border-collapse text-center">
-                    <thead>
-                      <tr className="border-b border-slate-900 bg-slate-100 font-bold">
-                        <th className="border-r border-slate-900 p-1 w-28">Jenis Prestasi</th>
-                        <th className="border-r border-slate-900 p-1 w-28">Tingkat Prestasi</th>
-                        <th className="border-r border-slate-900 p-1">Nama Prestasi</th>
-                        <th className="border-r border-slate-900 p-1 w-20">Tahun Prestasi</th>
-                        <th className="border-r border-slate-900 p-1 w-32">Penyelenggara</th>
-                        <th className="p-1 w-24">Peringkat</th>
-                      </tr>
-                    </thead>
-                    <tbody className="divide-y divide-slate-900">
-                      <tr>
-                        <td className="border-r border-slate-900 p-2">-</td>
-                        <td className="border-r border-slate-900 p-2">-</td>
-                        <td className="border-r border-slate-900 p-2">-</td>
-                        <td className="border-r border-slate-900 p-2 font-mono">-</td>
-                        <td className="border-r border-slate-900 p-2">-</td>
-                        <td className="p-2">-</td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
+                <PaperAchievementSection
+                  achievements={data.achievements_xii1}
+                  onAchChange={(idx, f, v) => handleAchievementChange('achievements_xii1', idx, f, v)}
+                />
 
                 {/* F. KETIDAKHADIRAN & TTD WALI (Foto 5: Kusniarti, S.Pd) */}
                 <div className="mb-6">
@@ -4462,153 +4407,32 @@ export default function StudentShow({
                   </table>
                 </div>
 
-                {/* C. P5 XII2 (Foto 4) */}
-                <div className="mb-2">
-                  <div className="font-bold text-[10px] uppercase text-slate-900 mb-0.5">
-                    C. PROJEK PENGUATAN PROFIL PELAJAR PANCASILA (P5)
-                  </div>
-                  <div className="text-[8.5px] mb-1 text-slate-800 flex flex-wrap gap-x-3">
-                    {isSampleStudent ? (
-                      <>
-                        <span><strong>Tema 1:</strong> Portofolio Digital Kelulusan</span>
-                        <span><strong>Tema 2:</strong> Edukasi HAKI & Sertifikasi BNSP</span>
-                      </>
-                    ) : (
-                      <span className="text-slate-500 italic">- Belum ada tema P5 -</span>
-                    )}
-                  </div>
-                  <table className="w-full border border-slate-900 text-[8.5px] border-collapse">
-                    <thead>
-                      <tr className="border-b border-slate-900 bg-slate-100 font-bold text-center">
-                        <th className="border-r border-slate-900 p-0.5 w-6">No.</th>
-                        <th className="border-r border-slate-900 p-0.5 w-44 text-left">Dimensi</th>
-                        <th className="border-r border-slate-900 p-0.5 w-32 text-left">Elemen</th>
-                        <th className="border-r border-slate-900 p-0.5 text-left">Sub-Elemen</th>
-                        <th className="p-0.5 w-32">Target Fase/Pencapaian</th>
-                      </tr>
-                    </thead>
-                    <tbody className="divide-y divide-slate-900">
-                      {isSampleStudent ? (
-                        <>
-                          <tr>
-                            <td className="border-r border-slate-900 p-0.5 text-center">1.</td>
-                            <td className="border-r border-slate-900 p-0.5 font-medium">Beriman, Bertakwa kepada Tuhan YME...</td>
-                            <td className="border-r border-slate-900 p-0.5">Akhlak bernegara</td>
-                            <td className="border-r border-slate-900 p-0.5">Mendukung etika profesi IT dan legalitas HAKI</td>
-                            <td className="p-0.5 text-center font-semibold">Sangat Berkembang</td>
-                          </tr>
-                          <tr>
-                            <td className="border-r border-slate-900 p-0.5 text-center">2.</td>
-                            <td className="border-r border-slate-900 p-0.5 font-medium">Berkebhinekaan Global</td>
-                            <td className="border-r border-slate-900 p-0.5">Standar global</td>
-                            <td className="border-r border-slate-900 p-0.5">Menerapkan standar aksesibilitas WCAG</td>
-                            <td className="p-0.5 text-center font-semibold">Sangat Berkembang</td>
-                          </tr>
-                          <tr>
-                            <td className="border-r border-slate-900 p-0.5 text-center">3.</td>
-                            <td className="border-r border-slate-900 p-0.5 font-medium">Bergotong Royong</td>
-                            <td className="border-r border-slate-900 p-0.5">Kepemimpinan tim</td>
-                            <td className="border-r border-slate-900 p-0.5">Mengarahkan tim rilis produk pada UKK</td>
-                            <td className="p-0.5 text-center font-semibold">Sangat Berkembang</td>
-                          </tr>
-                          <tr>
-                            <td className="border-r border-slate-900 p-0.5 text-center">4.</td>
-                            <td className="border-r border-slate-900 p-0.5 font-medium">Mandiri</td>
-                            <td className="border-r border-slate-900 p-0.5">Percaya diri</td>
-                            <td className="border-r border-slate-900 p-0.5">Mampu menyajikan portofolio profesional</td>
-                            <td className="p-0.5 text-center font-semibold">Sangat Berkembang</td>
-                          </tr>
-                          <tr>
-                            <td className="border-r border-slate-900 p-0.5 text-center">5.</td>
-                            <td className="border-r border-slate-900 p-0.5 font-medium">Bernalar Kritis</td>
-                            <td className="border-r border-slate-900 p-0.5">Refleksi dan evaluasi</td>
-                            <td className="border-r border-slate-900 p-0.5">Menguji performa dan keamanan software</td>
-                            <td className="p-0.5 text-center font-semibold">Sangat Berkembang</td>
-                          </tr>
-                          <tr>
-                            <td className="border-r border-slate-900 p-0.5 text-center">6.</td>
-                            <td className="border-r border-slate-900 p-0.5 font-medium">Kreatif</td>
-                            <td className="border-r border-slate-900 p-0.5">Karya aplikatif</td>
-                            <td className="border-r border-slate-900 p-0.5">Mempublikasikan aplikasi bernilai jual</td>
-                            <td className="p-0.5 text-center font-semibold">Sangat Berkembang</td>
-                          </tr>
-                        </>
-                      ) : (
-                        <tr>
-                          <td colSpan={5} className="p-2 text-center text-slate-500 italic">- Belum ada catatan penilaian P5 -</td>
-                        </tr>
-                      )}
-                    </tbody>
-                  </table>
-                </div>
+                {/* C. P5 */}
+                <PaperP5Section
+                  theme1={data.p5_theme_1_xii2}
+                  theme2={data.p5_theme_2_xii2}
+                  theme3={data.p5_theme_3_xii2}
+                  onTheme1Change={(v) => setData('p5_theme_1_xii2', v)}
+                  onTheme2Change={(v) => setData('p5_theme_2_xii2', v)}
+                  onTheme3Change={(v) => setData('p5_theme_3_xii2', v)}
+                  dimensions={data.p5_dimensions_xii2}
+                  onDimChange={(idx, f, v) => handleP5DimChange('p5_dimensions_xii2', idx, f, v)}
+                />
 
-                {/* D. EKSTRAKURIKULER XII2 (Foto 4) */}
-                <div>
-                  <div className="font-bold text-[10px] uppercase text-slate-900 mb-0.5">D. EKSTRAKURIKULER</div>
-                  <table className="w-full border border-slate-900 text-[9px] border-collapse">
-                    <thead>
-                      <tr className="border-b border-slate-900 bg-slate-100 font-bold text-center">
-                        <th className="border-r border-slate-900 p-0.5 w-8">No.</th>
-                        <th className="border-r border-slate-900 p-0.5 w-64 text-left">Ekstrakurikuler</th>
-                        <th className="p-0.5 text-left">Keterangan</th>
-                      </tr>
-                    </thead>
-                    <tbody className="divide-y divide-slate-900">
-                      {isSampleStudent ? (
-                        <tr>
-                          <td className="border-r border-slate-900 p-0.5 text-center">1.</td>
-                          <td className="border-r border-slate-900 p-0.5 font-medium">Praja Muda Karana (Pramuka)</td>
-                          <td className="p-0.5">Penegak Garuda / Berkelakuan Baik</td>
-                        </tr>
-                      ) : (
-                        <tr>
-                          <td colSpan={3} className="p-2 text-center text-slate-500 italic">- Belum ada kegiatan ekstrakurikuler -</td>
-                        </tr>
-                      )}
-                    </tbody>
-                  </table>
-                </div>
+                {/* D. EKSTRAKURIKULER */}
+                <PaperExtraSection
+                  extras={data.extras_xii2}
+                  onExtraChange={(idx, f, v) => handleExtraChange('extras_xii2', idx, f, v)}
+                />
               </div>
 
               {/* HALAMAN BELAKANG XII2 (Foto 1 Asli: KELULUSAN & IJAZAH) */}
               <div className="max-w-[210mm] mx-auto bg-white p-7 border border-slate-900 shadow-xs min-h-[297mm]">
-                {/* E. PRESTASI (Foto 1 & BNSP) */}
-                <div className="mb-4">
-                  <div className="font-bold text-[10.5px] uppercase text-slate-900 mb-1">E. PRESTASI</div>
-                  <table className="w-full border border-slate-900 text-[9.5px] border-collapse text-center">
-                    <thead>
-                      <tr className="border-b border-slate-900 bg-slate-100 font-bold">
-                        <th className="border-r border-slate-900 p-1 w-28">Jenis Prestasi</th>
-                        <th className="border-r border-slate-900 p-1 w-28">Tingkat Prestasi</th>
-                        <th className="border-r border-slate-900 p-1">Nama Prestasi</th>
-                        <th className="border-r border-slate-900 p-1 w-20">Tahun Prestasi</th>
-                        <th className="border-r border-slate-900 p-1 w-32">Penyelenggara</th>
-                        <th className="p-1 w-24">Peringkat</th>
-                      </tr>
-                    </thead>
-                    <tbody className="divide-y divide-slate-900">
-                      {isSampleStudent ? (
-                        <tr>
-                          <td className="border-r border-slate-900 p-2">Sertifikasi BNSP</td>
-                          <td className="border-r border-slate-900 p-2">Nasional</td>
-                          <td className="border-r border-slate-900 p-2 text-left font-semibold">Uji Kompetensi Keahlian (UKK) Rekayasa Perangkat Lunak</td>
-                          <td className="border-r border-slate-900 p-2 font-mono">2026</td>
-                          <td className="border-r border-slate-900 p-2">LSP-P1 SMKN 1 Beringin / BNSP</td>
-                          <td className="p-2 font-bold text-emerald-800">KOMPETEN</td>
-                        </tr>
-                      ) : (
-                        <tr>
-                          <td className="border-r border-slate-900 p-2">-</td>
-                          <td className="border-r border-slate-900 p-2">-</td>
-                          <td className="border-r border-slate-900 p-2">-</td>
-                          <td className="border-r border-slate-900 p-2 font-mono">-</td>
-                          <td className="border-r border-slate-900 p-2">-</td>
-                          <td className="p-2">-</td>
-                        </tr>
-                      )}
-                    </tbody>
-                  </table>
-                </div>
+                {/* E. PRESTASI */}
+                <PaperAchievementSection
+                  achievements={data.achievements_xii2}
+                  onAchChange={(idx, f, v) => handleAchievementChange('achievements_xii2', idx, f, v)}
+                />
 
                 {/* KETIDAKHADIRAN DAN KELULUSAN (FOTO 1 ASLI) */}
                 <div className="mb-6">

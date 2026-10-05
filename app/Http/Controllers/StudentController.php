@@ -7,6 +7,7 @@ use App\Models\Achievement;
 use App\Models\Attendance;
 use App\Models\AuditLog;
 use App\Models\EducationHistory;
+use App\Models\Extracurricular;
 use App\Models\Graduation;
 use App\Models\HealthRecord;
 use App\Models\SchoolClass;
@@ -14,6 +15,7 @@ use App\Models\SchoolProfile;
 use App\Models\Semester;
 use App\Models\Student;
 use App\Models\StudentClassHistory;
+use App\Models\StudentExtracurricular;
 use App\Models\StudentParent;
 use App\Models\StudentSubjectScore;
 use App\Models\Subject;
@@ -1156,7 +1158,7 @@ class StudentController extends Controller
                 ]);
             }
 
-            // Update Prestasi
+            // Update Prestasi Tunggal
             if ($request->filled('achievement_name')) {
                 Achievement::updateOrCreate(
                     [
@@ -1171,6 +1173,52 @@ class StudentController extends Controller
                         'rank' => $request->input('achievement_rank', 'Juara I'),
                     ]
                 );
+            }
+
+            // Update Ekstrakurikuler & Prestasi 6 Semester (Aspek D & E Rapor)
+            $semKeys = ['x1', 'x2', 'xi1', 'xi2', 'xii1', 'xii2'];
+            foreach ($semKeys as $sem) {
+                if ($request->has("extras_{$sem}") && is_array($request->input("extras_{$sem}"))) {
+                    foreach ($request->input("extras_{$sem}") as $extraItem) {
+                        if (!empty($extraItem['name']) && $extraItem['name'] !== '-') {
+                            $ext = Extracurricular::firstOrCreate(['name' => trim($extraItem['name'])]);
+                            if ($activeYear && $activeSem) {
+                                StudentExtracurricular::updateOrCreate(
+                                    [
+                                        'student_id' => $student->id,
+                                        'extracurricular_id' => $ext->id,
+                                        'academic_year_id' => $activeYear->id,
+                                        'semester_id' => $activeSem->id,
+                                    ],
+                                    [
+                                        'notes' => $extraItem['notes'] ?? '-',
+                                        'score' => 'A',
+                                    ]
+                                );
+                            }
+                        }
+                    }
+                }
+
+                if ($request->has("achievements_{$sem}") && is_array($request->input("achievements_{$sem}"))) {
+                    foreach ($request->input("achievements_{$sem}") as $achItem) {
+                        if (!empty($achItem['name']) && $achItem['name'] !== '-') {
+                            Achievement::updateOrCreate(
+                                [
+                                    'student_id' => $student->id,
+                                    'title' => trim($achItem['name']),
+                                ],
+                                [
+                                    'type' => !empty($achItem['type']) && $achItem['type'] !== '-' ? $achItem['type'] : 'Akademik',
+                                    'level' => !empty($achItem['level']) && $achItem['level'] !== '-' ? $achItem['level'] : 'Sekolah',
+                                    'year' => !empty($achItem['year']) && $achItem['year'] !== '-' ? $achItem['year'] : date('Y'),
+                                    'organizer' => !empty($achItem['organizer']) && $achItem['organizer'] !== '-' ? $achItem['organizer'] : 'Sekolah',
+                                    'rank' => !empty($achItem['rank']) && $achItem['rank'] !== '-' ? $achItem['rank'] : 'Peserta',
+                                ]
+                            );
+                        }
+                    }
+                }
             }
 
             // Update Kenaikan Kelas (Semester Genap Kelas X/XI)
